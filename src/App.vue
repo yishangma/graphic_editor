@@ -1,6 +1,6 @@
 <template>
   <div class="main-editor">
-    <ToolBar :editorData="editorData"></ToolBar>
+    <ToolBar :editorData="editorData" :toolList="tooList" :currentItem="currentItem"></ToolBar>
     <Sketchpad></Sketchpad>
     <PanelLeft :materialsList="materialsList"></PanelLeft>
     <PanelRight :toolList="toolList" :currentItem="currentItem"></PanelRight>

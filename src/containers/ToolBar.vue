@@ -3,247 +3,209 @@
 2月25日：用v-for结合v-if来优化 减少代码量 -->
 <template>
   <div class="tool-bar">
-    <div class="tool-box-left">
-      <img src="../assets/logo.png" alt="">
-    </div>
-    <div class="tool-box-center">
-      <div class="tool-bar-center">
-      </div>
-      <div class="tool-bar-left" v-for="(item, typeIndex) in toolList" :key="typeIndex">
-      <div class="tool-item" v-if="item.type === 'icon-beijingyanse'">
-        <div class="icon" :title="item.title">
-          <!-- <div class="tool-buju" @click="showColorPicker">
-                            <div :class="item.type" class="iconfont"  ></div>
-                            <Icon class="icon-down" type="ios-arrow-down" />
-                          </div> -->
-            <ColorPicker v-model="formData[item.name]" v-show="isshowColorPicker" class="BarColorPicker"
-              @on-change="(val) => handleToolClick(item, val, null)">
-              <div class="tool-buju" slot="preview">
-                <div :class="item.type" class="iconfont"></div>
-                <Icon class="icon-down" type="ios-arrow-down" />
-              </div>
-            </ColorPicker>
-          </div>
-        </div>
-        <div class="tool-item" v-else-if="item.type === 'icon-zhixian'">
-          <div class="icon" :title="item.title">
-            <div class="tool-buju" @click="showLineBox">
-              <div :class="item.type" class="iconfont"></div>
-              <Icon class="icon-down" type="ios-arrow-down" />
-            </div>
-          </div>
-          <LineBox v-show="isshowLineBox" class="linebox"></LineBox>
-        </div>
-        <div class="tool-item" v-else @click="handleToolClick(item)">
-          <div class="icon" :title="item.title">
-            <div :class="item.type" class="iconfont"></div>
-          </div>
-        </div>
-      </div>
-      <div class="tool-bar-right">
-      </div>
-    </div>
-    <div class="tool-box-right">
-      <div class="tool-itm">
-        <screenfull class="screenfull" @click="isScreenFull">
-          <div class="icon quanpin" title='全屏展示'>
-            <div class="iconfont icon-quanping allshow"></div>
-          </div>
-        </screenfull>
-      </div>
-    </div>
+    <template v-for="(type, typeIndex) in Object.keys(toolMap)">
+      <ToolBox mode="horizontal" :key="typeIndex">
+        <template v-for="(item, index) in toolMap[type]">
+          <ToolItem v-if="item.type === 'dropdown-color-picker'" :key="'tool_' + type + '_item_' + index"
+                    :active="item.active" :disabled="item.disabled" :style="item.toolbar.style">
+            <template v-slot:label>
+              <template v-if="item.disabled">
+                <ColorPicker v-model="formData[item.name]" @on-change="(val) => handleToolClick(item, val, null)">
+                  <div style="margin:0 3px;" slot="preview">
+                    <Icon class="icon-down" type="ios-arrow-down" />
+                  </div>
+                </ColorPicker>
+              </template>
+            </template>
+          </ToolItem>
+          <ToolItem v-if="item.type === 'dropdown-list'" :key="'tool_' + type + '_item_' + index"
+                    :title="handleLabel(item)" :active="item.active" :disabled="item.disabled" :style="item.toolbar.style">
+            <template v-slot:lable>
+              <Dropdown trigger="click" @on-click="(val) => handleDropdownClick(item, type, index, val)">
+                <div style="margin:0 3px;">
+                  <template v-if="item.lockLabel">
+                    <XIcon :iconfont="item.icon" :label="handleLabel(item)" style="vertical-align: middle;"></XIcon>
+                  </template>
+                  <template v-else>
+                    <XIcon :iconfont="item.children[item.selected].icon" :label="item.children[item.selected].label"
+                           style="vertical-align: middle;" :style="item.children[item.selected].style">
+                    </XIcon>
+                  </template>
+                </div>
+              </Dropdown>
+            </template>
+          </ToolItem>
+          <ToolItem v-if="item.type === 'normal'" :key="'tool_' + type + '_item_' + index" :title="handleLabel(item)"
+                    :active="item.active" :disabled="item.disabled" :style="item.toolbar.style"
+                    @click.native="handleToolClick(item)">
+            <template v-slot:label>
+              <XIcon :iconfont="item.icon" :label="handleLabel(item)"></XIcon>
+            </template>
+          </ToolItem>
+        </template>
+      </ToolBox>
+    </template>
   </div>
 </template>
 
 <script>
+import { Dropdown } from 'view-design'
+import ToolBox from '../components/ToolBox/Index.vue'
+import ToolItem from '../components/ToolBox/ToolItem.vue'
 import ColorPicker from '../global/ColorPicker/Index.vue'
-import screenfull from 'screenfull'
-import LineBox from '../global/LineBox/Index.vue'
-import TOOL from '../config/tools'
+import XIcon from '../global/Icon/Index.vue'
 export default {
   name: 'ToolBar',
   components: {
+    ToolBox,
+    ToolItem,
     ColorPicker,
-    LineBox,
-    screenfull
+    XIcon,
+    Dropdown
   },
   props: {
-    editorData: Object
+    editorData: Object,
+    toolList: Array,
+    currentItem: Array
   },
   data() {
     return {
       formData: this.editorData ? { ...this.editorData } : {},
-      isFullscreen: false,
-      isshowColorPicker: true,
-      isshowLineBox: false,
-      toolList: [
-        { type: 'icon-back', title: '撤销', name: 'chexiao' },
-        { type: 'icon-rizhi', title: '清空日志', name: 'clear' },
-        { type: 'icon-ashbin', title: '删除', name: 'delete' },
-        { type: 'icon-history', title: '历史记录', name: 'history' },
-        { type: 'icon-beijingyanse', title: '背景颜色', name: 'backgroundColor' },
-        { type: 'icon-zhixian', title: '线条类型', name: 'LineType' },
-        { type: 'icon-zoom-out', title: '放大', name: 'Fangda' },
-        { type: 'icon-zoom-in', title: '缩小', name: 'Suoxiao' },
-        { type: 'icon-download', title: '下载', name: 'Download', data: 'image' }
-      ]
+    }
+  },
+  computed: {
+    toolMap() {
+      const _t = this
+      const toolMap = {}
+      console.log(this.toolList, '干掉小日本')
+      _t.toolList.forEach(item => {
+        if (item.enableTool && item.enable && item.toolbar && item.toolbar.enable) {
+          const position = item.toolbar.position
+          if (!toolMap.hasOwnProperty(position)) {
+            toolMap[position] = []
+          }
+          toolMap[position].push(item)
+        }
+      })
+      console.log(toolMap, '小日本你个狗日的')
+      return toolMap
     }
   },
   methods: {
-    showColorPicker() {
-      this.isshowColorPicker = !this.isshowColorPicker
-    },
-    // 全屏显示函数
-    isScreenFull() {
-      if (!screenfull.isEnabled) {
-        this.$message({
-          message: '您的浏览器版本过低不支持全屏显示',
-          type: 'wraning'
-        })
-        return false
+    // 处理label
+    handleLabel(item) {
+      const _t = this
+      let label = _t.$t(item.lang)
+      if (item.shortcuts) {
+        label += ` (${item.shortcuts.label})`
       }
-      screenfull.toggle()
+      return label
     },
-    showLineBox() {
-      this.isshowLineBox = !this.isshowLineBox
+    handleDropdownClick(item, type, index, val) {
+      const _t = this
+      // console.log('handleDropdownClick', item.name)
+      if (item.disabled) {
+        return
+      }
+      const child = item.children[val]
+      _t.formData[item.name] = child.name
+      const payload = {
+        context: 'ToolBar',
+        type: item.type,
+        name: item.name,
+        data: child.data,
+        selected: val
+      }
+      _t.$X.utils.bus.$emit('editor/tool/trigger', payload)
     },
     handleToolClick(item, val) {
-      // console.log('handlajandin', item.name)
       const _t = this
-      let playLoad = {
+      // console.log('handleToolClick', item.name, val)
+      if (item.disabled) {
+        return
+      }
+      let payload = {
+        context: 'ToolBar',
         name: item.name
       }
       switch (item.name) {
-        case 'backgroundColor':
-          this.formData[item.name] = val
-          playLoad = {
-            ...playLoad,
+        case 'fill':
+        case 'lineColor':
+          _t.formData[item.name] = val
+          payload = {
+            ...payload,
             data: val
           }
           break
+        case 'toFront':
+        case 'toBack':
+          payload = {
+            ...payload,
+            data: _t.currentItem
+          }
+          break
       }
-      _t.$X.utils.eventbus.$emit('editor/tool/trigger', playLoad)
-    }
-  },
+      _t.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
+    },
+  }
 }
 </script>
 
-<style scoped lang="less" rel="stylesheet/less">
-Button {
-  height: 40px;
-}
-
+<style scoped lang="less" res="stylesheet/less">
 .tool-bar {
   display: flex;
-  flex-wrap: nowrap; //决定容器类项目是否可以换行，此时不可以
-  justify-content: flex-start; //定义项目在主轴上对齐的方式为左对齐
-  align-content: flex-start; //定义项目在交叉轴上的对齐方式为元素不会拉伸，沿交叉轴起边对齐
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
   width: 100%;
-  height: 40px;
-  padding: 0 20px; //内边距
-  position: fixed; //固定定位
+  padding: 0 20px;
+  position: fixed;
+  // height: 30px;
   top: 0;
   left: 0;
   right: 0;
-  background: #ffffff;
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, .1);
-  z-index: 500; //设置元素的堆叠顺序
+  background: #ffffff;
+  z-index: 500;
   transition: all .5s ease-in-out;
-  display: tabel-cell;
-  vertical-align: middle;
-  cursor: pointer; //悬浮时变手指
 
-  .tool-box-left {
-    flex: 1;
-
-    img {
-      text-align: left;
-      width: 75px;
-      height: 34.5px;
-    }
-  }
-
-  .tool-box-center {
-    flex: 5;
-    height: 40px;
-    line-height: 40px;
-    vertical-align: center;
-    text-align: center;
+  .tool-box {
     display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex: 1 1 auto;
+    z-index: 10;
+
+    &.left {
+      justify-content: flex-start;
+    }
+
+    &.center {
+      justify-content: flex-start;
+    }
+
+    &.right {
+      justify-content: flex-end;
+    }
 
     .tool-item {
       display: inline-block;
 
-      .icon {
-        // margin-left:10px;
-        width: 40px;
-        height: auto;
-        filter: alpha(Opacity=60);
-        opacity: 0.6;
+      .link {
+        display: inline-block;
+        line-height: 1;
+        vertical-align: middle;
 
-        .BarColorPicker {
-          margin-left: -30px;
+        .icon {
+          width: 40px;
+          height: auto;
         }
-
-        // .linebox{
-        //   margin-left:-10px;
-        // }
-      }
-
-      .icon:hover {
-        filter: alpha(Opacity=100);
-        opacity: 1;
-      }
-
-      .tool-buju {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .icon-down {
-        line-height: 40px;
-        font-size: 14px;
       }
     }
 
-    .tool-bar-left {
-      flex: 1;
-    }
-
-    .tool-bar-center {
-      flex: 1;
-    }
-
-    .tool-bar-right {
-      flex: 1;
-    }
-
-    .tool-bar-fanal {
-      flex: 1;
-    }
-  }
-
-  .tool-box-right {
-    flex: 1;
-    height: 40px;
-    line-height: 40px;
-    vertical-align: center;
-    text-align: center;
-
-    .quanpin {
-      right: 0;
-
-      .allshow {
-        filter: alpha(Opacity=60);
-        opacity: 0.5;
-      }
-
-      .allshow:hover {
-        filter: alpha(Opacity=100);
-        opacity: 1;
-        color: blue;
-      }
+    .divider {
+      height: calc(~"100% - 10px");
     }
   }
 }

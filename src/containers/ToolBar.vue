@@ -1,6 +1,3 @@
-<!-- 修改记录
-2月24日：用多个div来设置渲染导航栏
-2月25日：用v-for结合v-if来优化 减少代码量 -->
 <template>
   <div class="tool-bar">
     <template v-for="(type, typeIndex) in Object.keys(toolMap)">

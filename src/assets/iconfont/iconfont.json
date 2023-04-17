@@ -1,0 +1,86 @@
+{
+  "id": "3994739",
+  "name": "iconfont",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6052579",
+      "name": "背景",
+      "font_class": "background",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "435944",
+      "name": "日志",
+      "font_class": "rizhi",
+      "unicode": "e7c3",
+      "unicode_decimal": 59331
+    },
+    {
+      "icon_id": "1621497",
+      "name": "背景颜色",
+      "font_class": "beijingyanse",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "15838430",
+      "name": "ashbin",
+      "font_class": "ashbin",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "15838434",
+      "name": "back",
+      "font_class": "back",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "15838464",
+      "name": "download",
+      "font_class": "download",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "15838486",
+      "name": "history",
+      "font_class": "history",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "15838540",
+      "name": "time",
+      "font_class": "time",
+      "unicode": "e680",
+      "unicode_decimal": 59008
+    },
+    {
+      "icon_id": "15838552",
+      "name": "zoom-in",
+      "font_class": "zoom-in",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    },
+    {
+      "icon_id": "15838554",
+      "name": "zoom-out",
+      "font_class": "zoom-out",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
+      "icon_id": "26505830",
+      "name": "直线",
+      "font_class": "zhixian",
+      "unicode": "ee43",
+      "unicode_decimal": 60995
+    }
+  ]
+}

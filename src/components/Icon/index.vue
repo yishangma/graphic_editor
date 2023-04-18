@@ -1,7 +1,3 @@
-/**
-* Created by OXOYO on 2019/5/18.
-*
-*/
 
 <style scoped lang="less" rel="stylesheet/less">
 .tool-box {
@@ -23,7 +19,7 @@
       height: 30px;
       line-height: 30px;
       vertical-align: middle;
-      text-align: center;
+      //text-align: center;
       opacity: .3;
       margin: 0 2px;
       color: #000000;

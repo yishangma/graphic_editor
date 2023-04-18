@@ -3,40 +3,66 @@
     <template v-for="(type, typeIndex) in Object.keys(toolMap)">
       <ToolBox mode="horizontal" :key="typeIndex">
         <template v-for="(item, index) in toolMap[type]">
+          <!-- 颜色选择器 背景颜色 -->
           <ToolItem v-if="item.type === 'dropdown-color-picker'" :key="'tool_' + type + '_item_' + index"
                     :active="item.active" :disabled="item.disabled" :style="item.toolbar.style">
             <template v-slot:label>
               <template v-if="item.disabled">
                 <ColorPicker v-model="formData[item.name]" @on-change="(val) => handleToolClick(item, val, null)">
                   <div style="margin:0 3px;" slot="preview">
+                    <XIcon :iconfont="item.icon" style="vertical-align:middle"></XIcon>
                     <Icon class="icon-down" type="ios-arrow-down" />
                   </div>
                 </ColorPicker>
               </template>
             </template>
           </ToolItem>
-          <ToolItem v-if="item.type === 'dropdown-list'" :key="'tool_' + type + '_item_' + index"
-                    :title="handleLabel(item)" :active="item.active" :disabled="item.disabled" :style="item.toolbar.style">
-            <template v-slot:lable>
-              <Dropdown trigger="click" @on-click="(val) => handleDropdownClick(item, type, index, val)">
-                <div style="margin:0 3px;">
-                  <template v-if="item.lockLabel">
-                    <XIcon :iconfont="item.icon" :label="handleLabel(item)" style="vertical-align: middle;"></XIcon>
-                  </template>
-                  <template v-else>
-                    <XIcon :iconfont="item.children[item.selected].icon" :label="item.children[item.selected].label"
-                           style="vertical-align: middle;" :style="item.children[item.selected].style">
-                    </XIcon>
-                  </template>
-                </div>
-              </Dropdown>
+          <!-- 包括删除 撤销 历史记录等 -->
+          <ToolItem v-if="item.type === 'normal'" :key="'tool_' + type + '_item_' + index" :active="item.active"
+                    :disabled="item.disabled" :style="item.toolbar.style" @click.native="handleToolClick(item)">
+            <template v-slot:label>
+              <XIcon :iconfont="item.icon"></XIcon>
             </template>
           </ToolItem>
-          <ToolItem v-if="item.type === 'normal'" :key="'tool_' + type + '_item_' + index" :title="handleLabel(item)"
-                    :active="item.active" :disabled="item.disabled" :style="item.toolbar.style"
-                    @click.native="handleToolClick(item)">
+          <!-- 包括下载 线条类型 -->
+          <ToolItem v-if="item.type === 'dropdown-list'" :key="'tool_' + type + '_item_' + index" :active="item.active"
+                    :disabled="item.disabled" :style="item.toolbar.style">
             <template v-slot:label>
-              <XIcon :iconfont="item.icon" :label="handleLabel(item)"></XIcon>
+              <template v-if="item.disable">
+                <template v-if="item.lockLabel">
+                  <XIcon :iconfont="item.icon"></XIcon>
+                </template>
+              </template>
+              <template v-else>
+                <Dropdown trigger="click" @on-click="(val) => handleDropdownClick(item, type, index, val)">
+                  <div style="margin:0 3px">
+                    <template v-if="item.lockLabel">
+                      <XIcon :iconfont="item.icon" style="vertical-align: middle;"></XIcon>
+                    </template>
+                    <template v-else>
+                      <XIcon :iconfont="item.children[item.selected].icon" style="vertical-align: middle;"
+                             :style="item.children[item.selected].style">
+                      </XIcon>
+                    </template>
+                    <Icon type="ios-arrow-down"></Icon>
+                  </div>
+                  <DropdownMenu slot="list" style="text-align: center;">
+                    <DropdownItem v-for="(child, childIndex) in item.children" :key="childIndex" :name="childIndex"
+                                  :disabled="child.disabled" :divided="child.divider" :select="item.selected === childIndex">
+                      <template v-if="child.type === 'normal'">
+                        <XIcon :iconfont="child.icon" :style="child.style"></XIcon>
+                      </template>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </template>
+            </template>
+          </ToolItem>
+          <!-- logo显示 -->
+          <ToolItem v-if="item.type === 'link'" :key="'tool_' + type + '_item_' + index" :active="item.active"
+                    :disabled="item.disabled" :style="item.toolbar.style">
+            <template v-slot:label>
+              <XIcon class="link" :iconfont="item.icon" :img="item.img"></XIcon>
             </template>
           </ToolItem>
         </template>
@@ -46,7 +72,7 @@
 </template>
 
 <script>
-import { Dropdown } from 'view-design'
+import { DropdownMenu } from 'view-design'
 import ToolBox from '../components/ToolBox/Index.vue'
 import ToolItem from '../components/ToolBox/ToolItem.vue'
 import ColorPicker from '../global/ColorPicker/Index.vue'
@@ -58,7 +84,7 @@ export default {
     ToolItem,
     ColorPicker,
     XIcon,
-    Dropdown
+    DropdownMenu
   },
   props: {
     editorData: Object,
@@ -90,14 +116,14 @@ export default {
   },
   methods: {
     // 处理label
-    handleLabel(item) {
-      const _t = this
-      let label = _t.$t(item.lang)
-      if (item.shortcuts) {
-        label += ` (${item.shortcuts.label})`
-      }
-      return label
-    },
+    // handleLabel(item) {
+    //   const _t = this
+    //   let label = _t.item.lang
+    //   if (item.shortcuts) {
+    //     label += ` (${item.shortcuts.label})`
+    //   }
+    //   return label
+    // },
     handleDropdownClick(item, type, index, val) {
       const _t = this
       // console.log('handleDropdownClick', item.name)
@@ -113,32 +139,25 @@ export default {
         data: child.data,
         selected: val
       }
-      _t.$X.utils.bus.$emit('editor/tool/trigger', payload)
+      _t.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
     },
     handleToolClick(item, val) {
       const _t = this
-      // console.log('handleToolClick', item.name, val)
-      if (item.disabled) {
-        return
-      }
+      // if (!item.disabled) {
+      //   return
+      // }
+      console.log('handleToolClick', item.name, val)
+
       let payload = {
         context: 'ToolBar',
         name: item.name
       }
       switch (item.name) {
-        case 'fill':
-        case 'lineColor':
-          _t.formData[item.name] = val
+        case 'backgroundColor':
+          this.formData[item.name] = val
           payload = {
             ...payload,
             data: val
-          }
-          break
-        case 'toFront':
-        case 'toBack':
-          payload = {
-            ...payload,
-            data: _t.currentItem
           }
           break
       }
@@ -188,11 +207,16 @@ export default {
 
     .tool-item {
       display: inline-block;
+      flex: 2;
 
       .link {
         display: inline-block;
         line-height: 1;
-        vertical-align: middle;
+        // vertical-align: middle;
+        width: 75px;
+        height: 34.5px;
+        text-align: left !important;
+        justify-content: flex-start;
 
         .icon {
           width: 40px;
@@ -205,5 +229,9 @@ export default {
       height: calc(~"100% - 10px");
     }
   }
+}
+
+.DropdownItem:hover {
+  color: blue
 }
 </style>

@@ -134,9 +134,12 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'chexiao',
       label: 'Chexiao',
+      title: '撤销',
       lang: 'L10001',
       type: 'normal',
       icon: 'icon-back',
+      show: true,
+      showing: true,
       enableTool: true,
       enable: true,
       enableMode: ['edit'],
@@ -156,37 +159,15 @@ export default function (system = {}, disableTools = [], enableTools = [], short
         divider: false
       }
     },
-//   全屏展示-------------------------
-     {
-      name:fullscreen;
-      label: 'fullscreen',
-      lang: 'L10025',
-      type: 'normal',
-      icon: 'full-screen',
-      enableTool: true,
-      enable: true,
-      enableMode: ['edit', 'preview'],
-      disabled: false,
-      disabledMode: ['edit', 'preview'],
-      shortcuts: '',
-      toolbar: {
-        enable: true,
-        position: 'right',
-        style: {},
-        divider: false
-      },
-      contextmenu: {
-        enable: true,
-        target: ['canvas'],
-        style: {},
-        divider: false
-      }
     // 清除日志--------------------------------------------------------------
     {
       name: 'clear',
       label: 'Clear',
+      title: '清除日志',
       lang: 'L10032',
       type: 'normal',
+      show: true,
+      showing: true,
       icon: 'icon-rizhi',
       enableTool: true,
       enable: true,
@@ -211,8 +192,12 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'history',
       label: 'history',
+      title: '历史记录',
       lang: 'L10041',
       type: 'normal',
+      show: true,
+      showing: true,
+
       icon: 'icon-history',
       enableTool: true,
       enable: true,
@@ -237,8 +222,12 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'delete',
       label: 'Delete',
+      title: '删除',
       lang: 'L10005',
       type: 'normal',
+      show: false,
+      showing: true,
+
       icon: 'icon-ashbin',
       enableTool: true,
       enable: true,
@@ -257,14 +246,47 @@ export default function (system = {}, disableTools = [], enableTools = [], short
         target: ['canvas'],
         style: {},
         divider: true
+      },
+
+    },
+    {
+      name: 'clearAll',
+      label: 'ClearAll',
+      title: '清空画布',
+      lang: 'L10005',
+      type: 'normal',
+      show: true,
+      showing: false,
+      icon: 'icon-ashbin',
+      enableTool: true,
+      enable: true,
+      enableMode: ['edit'],
+      disabled: false,
+      disabledMode: ['edit'],
+      shortcuts: shortcutMap.ClearAll,
+      toolbar: {
+        enable: true,
+        position: 'center',
+        style: {},
+        divider: true
+      },
+      contextmenu: {
+        enable: true,
+        target: ['canvas'],
+        style: {},
+        divider: true
       }
     },
     // 放大----------------------------------------
     {
       name: 'Fangda',
       label: 'Zoom In',
+      title: '放大',
       lang: 'L10006',
       type: 'normal',
+      showing: true,
+
+      show: true,
       icon: 'icon-zoom-out',
       enableTool: true,
       enable: true,
@@ -290,8 +312,12 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'Suoxiao',
       label: 'Zoom Out',
+      title: '缩小',
+      show: true,
       lang: 'L10007',
       type: 'normal',
+      showing: true,
+
       icon: 'icon-zoom-in',
       enableTool: true,
       enable: true,
@@ -316,6 +342,7 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'backgroundColor',
       label: 'Canvas background',
+      title: '背景颜色',
       lang: 'L10034',
       type: 'dropdown-color-picker',
       icon: 'icon-beijingyanse',
@@ -371,6 +398,7 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'lineType',
       label: 'line style',
+      title: '线条类型',
       lang: 'L10014',
       type: 'dropdown-list',
       icon: 'icon-zhixian',
@@ -435,6 +463,7 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'Download',
       label: 'download',
+      title: '下载',
       lang: 'L10030',
       type: 'dropdown-list',
       icon: 'icon-download',
@@ -490,9 +519,11 @@ export default function (system = {}, disableTools = [], enableTools = [], short
     {
       name: 'fullscreen',
       label: 'fullscreen',
+      title: '全屏',
       lang: 'L10025',
       type: 'normal',
-      icon: 'full-screen',
+      showing: true,
+      icon: 'icon-quanping',
       enableTool: true,
       enable: true,
       enableMode: ['edit', 'preview'],

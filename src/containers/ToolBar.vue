@@ -18,8 +18,9 @@
             </template>
           </ToolItem>
           <!-- 包括删除 撤销 历史记录等 -->
-          <ToolItem v-if="item.type === 'normal'" :key="'tool_' + type + '_item_' + index" :active="item.active"
-                    :disabled="item.disabled" :style="item.toolbar.style" @click.native="handleToolClick(item)">
+          <ToolItem v-if="item.type === 'normal' && item.showing" :key="'tool_' + type + '_item_' + index"
+                    :active="item.active" :disabled="item.disabled" :style="item.toolbar.style"
+                    @click.native="handleToolClick(item)">
             <template v-slot:label>
               <XIcon :iconfont="item.icon"></XIcon>
             </template>
@@ -101,7 +102,7 @@ export default {
       const _t = this
       const toolMap = {}
       console.log(this.toolList, '干掉小日本')
-      _t.toolList.forEach(item => {
+      this.toolList.forEach(item => {
         if (item.enableTool && item.enable && item.toolbar && item.toolbar.enable) {
           const position = item.toolbar.position
           if (!toolMap.hasOwnProperty(position)) {
@@ -118,7 +119,7 @@ export default {
     // 处理label
     // handleLabel(item) {
     //   const _t = this
-    //   let label = _t.item.lang
+    //   let label = this.item.lang
     //   if (item.shortcuts) {
     //     label += ` (${item.shortcuts.label})`
     //   }
@@ -131,7 +132,7 @@ export default {
         return
       }
       const child = item.children[val]
-      _t.formData[item.name] = child.name
+      this.formData[item.name] = child.name
       const payload = {
         context: 'ToolBar',
         type: item.type,
@@ -139,7 +140,7 @@ export default {
         data: child.data,
         selected: val
       }
-      _t.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
+      this.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
     },
     handleToolClick(item, val) {
       const _t = this
@@ -161,7 +162,7 @@ export default {
           }
           break
       }
-      _t.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
+      this.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
     },
   }
 }

@@ -1,9 +1,10 @@
 <template>
-  <div class="main-editor">
-    <ToolBar :editorData="editorData" :toolList="tooList" :currentItem="currentItem"></ToolBar>
+  <div class="main-editor" @contextmenu.stop.prevent>
+    <ToolBar :editorData="editorData" :toolList="toolList" :currentItem="currentItem"></ToolBar>
     <Sketchpad></Sketchpad>
     <PanelLeft :materialsList="materialsList"></PanelLeft>
     <PanelRight :toolList="toolList" :currentItem="currentItem"></PanelRight>
+    <ClickRight :editorData="editorData" :toolList="toolList"></ClickRight>
     <History ref="history" @on-revert="doRevert"></History>
   </div>
 </template>
@@ -13,13 +14,15 @@ import ToolBar from './containers/ToolBar.vue'
 import Sketchpad from './containers/Sketchpad.vue'
 import PanelLeft from './containers/PanelLeft.vue'
 import PanelRight from './containers/PanelRight.vue'
+import ClickRight from './containers/ClickRight.vue'
 // import eventbus from '../assets/EventBus'
 import History from './containers/History.vue'
 import G6 from './global/g6/index.js'
-// import obj from '../global/g6/node/index'
-// import G6 from '@antv/g6'
+// 全屏
+import screenfull from 'screenfull'
 import utils from './global/g6/utils'
 import * as G6Util from '@antv/util'
+import Mousetrap from 'mousetrap'
 export default {
   name: 'MainEdiotr',
   components: {
@@ -27,7 +30,8 @@ export default {
     Sketchpad,
     PanelLeft,
     PanelRight,
-    History
+    History,
+    ClickRight
   },
   data() {
     return {
@@ -81,6 +85,7 @@ export default {
     createGraph() {
       const _t = this
       const { toolList, shortcutMap } = _t.$X.config.tools
+      this.toolList = toolList
       console.log(toolList, 'toolList')
       console.log('存储', _t.$X.config.storage.prefix)
 
@@ -208,7 +213,10 @@ export default {
         })
         _t.graph.paint()
       })
-      _t.graph.on('editor:record', function (from) {
+      _t.graph.on('editor:contextmenu', function (data) {
+        _t.$X.utils.eventbus.$emit('editor/contextmenu/open', data)
+      })
+      this.graph.on('editor:record', function (from) {
         // 更新操作日志
         console.log('editor:record from', from)
         _t.updateLog({
@@ -219,6 +227,7 @@ export default {
           }
         })
       })
+      this.bindShortcuts()
     },
     canvasMousedown() {
       const _t = this
@@ -319,6 +328,7 @@ export default {
       }
     },
     handleToolTrigger(info) {
+      console.log(info, '别拿老乡凤梨')
       const _t = this
       let isRecord = false
       switch (info.name) {
@@ -367,7 +377,7 @@ export default {
           }
           break
         }
-        // 删除逻辑
+        // 删除逻辑 键盘删除
         case 'delete': {
           const nodes = []
           // 获取画板中的node节点 forEach遍历 把所有的node节点放入nodes数组中，之后选择node在removeItem
@@ -446,7 +456,73 @@ export default {
           }
           break
         }
+        case 'lineType': {
+          this.graph.$D.lineType = info.data
+          this.graph.getEdges().forEach(edge => {
+            if (edge.hasState('active')) {
+              isRecord = true;
+              this.graph.updateItem(edge, {
+                type: info.data
+              })
+              this.graph.refreshItem(edge)
+              // 备注 refreshItem和updateItem在/src/global/g6/behavior/nodeControl
+            }
+          })
+          break
+        }
+        case 'clearAll': {
+          this.$Modal.confirm({
+            title: '提示',
+            // 确认清空画布？
+            content: '确认清空画布？',
+            onOk: function () {
+              // 更新操作日志
+              _t.updateLog({
+                action: 'clear'
+              })
+              _t.graph.clear()
+              _t.graph.paint()
+            }
+          })
+          // 更新currentItem
+          _t.currentItem = []
+          break
+        }
+        // 全屏展示
+        case 'fullscreen': {
+          // if (screenfull.enabled) {
+          screenfull.toggle()
+          // }
+          break
+        }
       }
+    },
+    bindShortcuts() {
+      const _t = this
+      const toolListData = _t.$X.utils.storage.get('toolList', _t.$X.config.storage.prefix)
+      if (Array.isArray(toolListData)) {
+        toolListData.forEach(item => {
+          if (item.enableTool && item.shortcuts) {
+            Mousetrap.bind(item.shortcuts.key, function (e) {
+              if (e.preventDefault) {
+                e.preventDefault()
+              } else {
+                // internet explorer
+                e.returnValue = false
+              }
+              _t.handleToolTrigger({
+                name: item.name,
+                data: {}
+              })
+              return false
+            })
+          }
+        })
+      }
+      // 绑定按键事件
+      document.addEventListener('keyup', function () {
+        _t.$X.utils.eventbus.$emit('editor/contextmenu/close')
+      })
     },
     doRevert(data) {
       console.log(data, 'doRevert')

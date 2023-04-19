@@ -1,6 +1,4 @@
 /**
-* Created by OXOYO on 2019/7/1.
-*
 * ContextMenu 右键菜单
 */
 
@@ -84,23 +82,13 @@
   <div class="context-menu" v-show="isShow" :style="contextMenuStyle" @click.stop.prevent>
     <ToolBox mode="vertical">
       <template v-for="(item, index) in contextMenuList">
-        <ToolItem v-if="item.type === 'text'" :key="'contextmenu_item_' + index" :active="item.active"
-          :disabled="item.disabled" :style="item.contextmenu.style" @click.native="handleToolClick(item)">
-          <template v-slot:label>
-            <div class="item-icon">
-              <XIcon :iconfont="item.icon"></XIcon>
-            </div>
-            <span class="item-label">{{ $t(item.lang) }}</span>
-            <span class="item-shortcut" v-if="item.shortcuts">{{ item.shortcuts.label }}</span>
-          </template>
-        </ToolItem>
         <ToolItem v-if="item.type === 'dropdown-color-picker'" :key="'contextmenu_item_' + index" :active="item.active"
-          :disabled="item.disabled" :style="item.contextmenu.style" @mouseenter.native="handleItemHover">
+                  :disabled="item.disabled" :style="item.contextmenu.style" @mouseenter.native="handleItemHover">
           <template v-slot:label>
             <div class="item-icon">
               <XIcon :iconfont="item.icon"></XIcon>
             </div>
-            <span class="item-label">{{ $t(item.lang) }}</span>
+            <span class="item-label">{{ item.title }}</span>
             <span class="item-shortcut" v-if="item.shortcuts">{{ item.shortcuts.label }}</span>
             <div class="item-more">
               <Icon type="ios-arrow-forward"></Icon>
@@ -109,20 +97,20 @@
           <template v-slot:content>
             <ToolBox mode="vertical" style="padding: 0;">
               <ToolItem style="padding: 0;">
-                <XColorPicker slot="label" v-model="formData[item.name]" :preview="false"
-                  @on-change="(val) => handleToolClick(item, val, null)" @on-close="doHide">
-                </XColorPicker>
+                <ColorPicker slot="label" v-model="formData[item.name]" :preview="false"
+                             @on-change="(val) => handleToolClick(item, val, null)" @on-close="doHide">
+                </ColorPicker>
               </ToolItem>
             </ToolBox>
           </template>
         </ToolItem>
         <ToolItem v-if="item.type === 'dropdown-list'" :key="'contextmenu_item_' + index" :active="item.active"
-          :disabled="item.disabled" :style="item.contextmenu.style" @mouseenter.native="handleItemHover">
+                  :disabled="item.disabled" :style="item.contextmenu.style" @mouseenter.native="handleItemHover">
           <template v-slot:label>
             <div class="item-icon">
               <XIcon :iconfont="item.icon"></XIcon>
             </div>
-            <span class="item-label">{{ $t(item.lang) }}</span>
+            <span class="item-label">{{ item.title }}</span>
             <span class="item-shortcut" v-if="item.shortcuts">{{ item.shortcuts.label }}</span>
             <div class="item-more">
               <Icon type="ios-arrow-forward"></Icon>
@@ -132,68 +120,67 @@
             <ToolBox mode="vertical">
               <template v-for="(child, childIndex) in item.children">
                 <ToolItem :key="'contextmenu_item_' + index + '_child_' + childIndex" :active="child.active"
-                  :disabled="child.disabled" @click.native="handleChildClick(item, child, childIndex)">
+                          :disabled="child.disabled" @click.native="handleChildClick(item, child, childIndex)">
                   <template v-slot:label>
                     <template v-if="child.type === 'normal'">
                       <div class="item-icon">
                         <XIcon :iconfont="child.icon"></XIcon>
                       </div>
-                      <span class="item-label">{{ child.lang ? $t(child.lang) : child.label }}</span>
+                      <span class="item-label">{{ child.label }}</span>
                     </template>
                     <template v-else-if="child.type === 'link'">
                       <a class="item-link" :href="child.link" target="_blank" style="color: #333333;" @click.stop>
                         <div class="item-icon">
                           <XIcon :iconfont="child.icon"></XIcon>
                         </div>
-                        <span class="item-label">{{ child.lang ? $t(child.lang) : child.label }}</span>
+                        <span class="item-label">{{ child.label }}</span>
                       </a>
                     </template>
                   </template>
                 </ToolItem>
-                <XDivider class="divider" v-if="child.divider"
-                  :key="'contextmenu' + '_divider_' + index + '_child_' + childIndex" mode="horizontal" />
               </template>
             </ToolBox>
           </template>
         </ToolItem>
         <ToolItem v-if="item.type === 'link'" :key="'contextmenu_item_' + index" :active="item.active"
-          :disabled="item.disabled" :style="item.contextmenu.style" @click.native="handleToolClick(item)">
+                  :disabled="item.disabled" :style="item.contextmenu.style" @click.native="handleToolClick(item)">
           <template v-slot:label>
             <a :href="item.link" target="_blank" style="color: #333333;">
               <div class="item-icon">
                 <XIcon :iconfont="item.icon"></XIcon>
               </div>
-              <span class="item-label">{{ $t(item.lang) }}</span>
+              <!-- <span class="item-label">{{ $t(item.lang) }}</span> -->
               <span class="item-shortcut" v-if="item.shortcuts">{{ item.shortcuts.label }}</span>
             </a>
           </template>
         </ToolItem>
-        <ToolItem v-if="item.type === 'normal'" :key="'contextmenu_item_' + index" :active="item.active"
-          :disabled="item.disabled" :style="item.contextmenu.style" @click.native="handleToolClick(item)">
+        <ToolItem v-if="item.type === 'normal' && item.show" :key="'contextmenu_item_' + index" :active="item.active"
+                  :disabled="item.disabled" :style="item.contextmenu.style" @click.native="handleToolClick(item)">
           <template v-slot:label>
             <div class="item-icon">
               <XIcon :iconfont="item.icon"></XIcon>
             </div>
-            <span class="item-label">{{ $t(item.lang) }}</span>
+            <span class="item-label">{{ item.title }}</span>
             <span class="item-shortcut" v-if="item.shortcuts">{{ item.shortcuts.label }}</span>
           </template>
         </ToolItem>
-        <XDivider class="divider" v-if="item.contextmenu.divider" :key="'contextmenu' + '_divider_' + index"
-          mode="horizontal" />
       </template>
     </ToolBox>
   </div>
 </template>
 
 <script>
-import ToolBox from '../components/ToolBox/Index'
-import ToolItem from '../components/ToolBox/ToolItem'
-
+import ToolBox from '../components/ToolBox/Index.vue'
+import ToolItem from '../components/ToolBox/ToolItem.vue'
+import XIcon from '../global/Icon/Index.vue'
+import ColorPicker from '../global/ColorPicker/Index.vue'
 export default {
-  name: 'ContextMenu',
+  name: 'ClickRight',
   components: {
     ToolBox,
-    ToolItem
+    ToolItem,
+    XIcon,
+    ColorPicker
   },
   props: {
     editorData: Object,
@@ -214,30 +201,30 @@ export default {
     handleContextMenuList() {
       const _t = this
       const contextMenuList = []
-      _t.toolList.forEach(item => {
+      this.toolList.forEach(item => {
         if (item.enableTool && item.enable && item.contextmenu && item.contextmenu.enable) {
-          if (!item.contextmenu.hasOwnProperty('target') || (item.contextmenu.hasOwnProperty('target') && (item.contextmenu.target.length && _t.options && _t.options.type && item.contextmenu.target.includes(_t.options.type)))) {
+          if (!item.contextmenu.hasOwnProperty('target') || (item.contextmenu.hasOwnProperty('target') && (item.contextmenu.target.length && this.options && this.options.type && item.contextmenu.target.includes(this.options.type)))) {
             contextMenuList.push(item)
           }
         }
       })
-      _t.contextMenuList = contextMenuList
+      this.contextMenuList = contextMenuList
     },
     handleContextMenuStyle() {
       const _t = this
       const style = {}
-      if (!_t.options) {
+      if (!this.options) {
         return style
       }
-      _t.$nextTick(function () {
-        const x = _t.options.x !== undefined ? (parseInt(_t.options.x) > 0 ? parseInt(_t.options.x) : 0) : 0
-        const y = _t.options.y !== undefined ? (parseInt(_t.options.y) > 0 ? parseInt(_t.options.y) : 0) : 0
+      this.$nextTick(function () {
+        const x = this.options.x !== undefined ? (parseInt(this.options.x) > 0 ? parseInt(this.options.x) : 0) : 0
+        const y = this.options.y !== undefined ? (parseInt(this.options.y) > 0 ? parseInt(this.options.y) : 0) : 0
         // 判断是否超出边界
         if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
           const winHeight = document.documentElement.clientHeight
           const winWidth = document.documentElement.clientWidth
-          const elHeight = _t.$el.clientHeight
-          const elWidth = _t.$el.clientWidth
+          const elHeight = this.$el.clientHeight
+          const elWidth = this.$el.clientWidth
           if (x + elWidth > winWidth) {
             style['right'] = '10px'
           } else {
@@ -249,22 +236,22 @@ export default {
             style['top'] = y + 'px'
           }
         }
-        _t.contextMenuStyle = style
+        this.contextMenuStyle = style
       })
     },
     doShow(data) {
       const _t = this
-      _t.options = data
-      _t.handleContextMenuList()
+      this.options = data
+      this.handleContextMenuList()
       // 处理样式
-      _t.handleContextMenuStyle()
-      _t.isShow = true
+      this.handleContextMenuStyle()
+      this.isShow = true
     },
     doHide() {
       const _t = this
-      _t.options = null
-      _t.contextMenuList = []
-      _t.isShow = false
+      this.options = null
+      this.contextMenuList = []
+      this.isShow = false
     },
     handleChildClick(item, child, childIndex) {
       const _t = this
@@ -278,8 +265,8 @@ export default {
         data: child.data,
         selected: childIndex
       }
-      _t.$X.utils.bus.$emit('editor/tool/trigger', payload)
-      _t.doHide()
+      this.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
+      this.doHide()
     },
     handleToolClick(item, val) {
       const _t = this
@@ -291,30 +278,17 @@ export default {
         name: item.name
       }
       switch (item.name) {
-        case 'paste':
-          payload = {
-            ...payload,
-            data: _t.options
-          }
-          break
-        case 'fill':
-        case 'lineColor':
-          _t.formData[item.name] = val
+        case 'backgroundColor':
+          // case 'lineColor':
+          this.formData[item.name] = val
           payload = {
             ...payload,
             data: val
           }
           break
-        case 'toFront':
-        case 'toBack':
-          payload = {
-            ...payload,
-            data: _t.currentItem
-          }
-          break
       }
-      _t.$X.utils.bus.$emit('editor/tool/trigger', payload)
-      _t.doHide()
+      this.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
+      this.doHide()
     },
     handleItemHover(event) {
       const target = event.target
@@ -322,12 +296,17 @@ export default {
       if (toolBox && target.clientWidth) {
         toolBox.style.left = target.clientWidth + 'px'
       }
-    }
+    },
+    handleEditorClick() {
+      const _t = this
+      this.$X.utils.eventbus.$emit('editor/contextmenu/close')
+    },
   },
   created() {
     const _t = this
-    _t.$X.utils.bus.$on('editor/contextmenu/open', _t.doShow)
-    _t.$X.utils.bus.$on('editor/contextmenu/close', _t.doHide)
+    console.log(this.toolList, '消灭小日本')
+    this.$X.utils.eventbus.$on('editor/contextmenu/open', this.doShow)
+    this.$X.utils.eventbus.$on('editor/contextmenu/close', this.doHide)
   }
 }
 </script>

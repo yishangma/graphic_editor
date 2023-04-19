@@ -424,6 +424,12 @@ export default {
           })
           break
         }
+        case 'fullscreen':{
+            if(screenfull.enabled){
+                screenfull.toggle()
+          }
+          break
+        }
         // 放大
         case 'Fangda':
         case 'Suoxiao':

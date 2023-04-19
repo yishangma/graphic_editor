@@ -156,6 +156,31 @@ export default function (system = {}, disableTools = [], enableTools = [], short
         divider: false
       }
     },
+//   全屏展示-------------------------
+     {
+      name:fullscreen;
+      label: 'fullscreen',
+      lang: 'L10025',
+      type: 'normal',
+      icon: 'full-screen',
+      enableTool: true,
+      enable: true,
+      enableMode: ['edit', 'preview'],
+      disabled: false,
+      disabledMode: ['edit', 'preview'],
+      shortcuts: '',
+      toolbar: {
+        enable: true,
+        position: 'right',
+        style: {},
+        divider: false
+      },
+      contextmenu: {
+        enable: true,
+        target: ['canvas'],
+        style: {},
+        divider: false
+      }
     // 清除日志--------------------------------------------------------------
     {
       name: 'clear',

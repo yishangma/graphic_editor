@@ -1,7 +1,4 @@
-/**
- * Created by OXOYO on 2019/7/16.
- *
- * 更新图形控制
+/** 更新图形控制
  */
 
 export default function (cfg, group) {

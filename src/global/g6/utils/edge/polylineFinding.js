@@ -1,11 +1,5 @@
-/**
- * Created by OXOYO on 2019/8/7.
- *
+/*
  * 折线寻径
- *
- * 文档：https://www.yuque.com/antv/blog/eyi70n
- * 鸣谢：@guozhaolong https://github.com/guozhaolong/wfd
- * 参考：https://github.com/guozhaolong/wfd/blob/master/src/item/edge.js
  */
 
 // 折线寻径

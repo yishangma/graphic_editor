@@ -1,7 +1,4 @@
-/**
- * Created by OXOYO on 2019/9/9.
- *
- * 图形旋转
+/** 图形旋转
  */
 
 export default function (cfg, group, radian) {

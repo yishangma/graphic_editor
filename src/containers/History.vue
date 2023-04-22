@@ -35,55 +35,50 @@
     },
     methods: {
       show () {
-        const _t = this
-        _t.getLog()
-        _t.isShow = true
-        _t.$nextTick(function () {
-          _t.toggleLog(0)
+        this.getLog()
+        this.isShow = true
+        this.$nextTick(function () {
+          this.toggleLog(0)
         })
       },
       doHide () {
-        const _t = this
-        if (_t.graph) {
-          _t.graph.destroy()
-          _t.graph = null
-          _t.currentIndex = null
+        if (this.graph) {
+          this.graph.destroy()
+          this.graph = null
+          this.currentIndex = null
         }
-        _t.isShow = false
+        this.isShow = false
       },
       doRevert () {
-        const _t = this
-        if (!_t.log) {
+        if (!this.log) {
           return
         }
-        const item = _t.log.list[_t.currentIndex]
+        const item = this.log.list[this.currentIndex]
         if (!item) {
           return
         }
-        _t.$emit('on-revert', item.content)
-        _t.doHide()
+        this.$emit('on-revert', item.content)
+        this.doHide()
       },
       getLog () {
-        const _t = this
-        _t.log = _t.$X.utils.storage.get('log', _t.$X.config.storage.prefix)
-        console.log(_t.log, '_t.log42423432')
+        this.log = this.$X.utils.storage.get('log', this.$X.config.storage.prefix)
+        console.log(this.log, '_t.log42423432')
       },
       toggleLog (index) {
-        const _t = this
-        if (!_t.log) {
+        if (!this.log) {
           return
         }
-        const el = _t.$el
-        _t.currentIndex = index
-        const item = _t.log.list[_t.currentIndex]
+        const el = this.$el
+        this.currentIndex = index
+        const item = this.log.list[this.currentIndex]
         if (!item) {
           return
         }
-        if (!_t.graph) {
+        if (!this.graph) {
           // 画板
           const sketchpad = el.querySelector('#history-preview')
           const grid = new G6.Grid()
-          _t.editor = new G6.Graph({
+          this.editor = new G6.Graph({
             plugins: [
               grid
             ],
@@ -95,20 +90,19 @@
             autoPaint: true
           })
         }
-        _t.editor.data(item.content)
-        _t.editor.render()
-        const width = _t.editor.get('width')
-        const height = _t.editor.get('height')
+        this.editor.data(item.content)
+        this.editor.render()
+        const width = this.editor.get('width')
+        const height = this.editor.get('height')
         const center = {
           x: width / 2,
           y: height / 2
         }
-        _t.editor.zoomTo(1, center)
+        this.editor.zoomTo(1, center)
       }
     }
   }
 </script>
-
 
 <style scoped lang="less">
   .history-model {

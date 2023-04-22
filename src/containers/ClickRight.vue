@@ -2,82 +2,6 @@
 * ContextMenu 右键菜单
 */
 
-<style scoped lang="less" rel="stylesheet/less">
-.context-menu {
-  position: absolute;
-  min-width: 120px;
-  width: auto !important;
-  z-index: 9999;
-  background: #FFF;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .1);
-  padding: 5px 0;
-
-  .tool-box {
-    padding: 0;
-
-    .tool-item {
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-
-      &:hover {
-        color: #000000;
-        background: rgba(0, 0, 0, .1);
-
-        .tool-box {
-          visibility: visible;
-        }
-      }
-
-      .tool-box {
-        visibility: hidden;
-        position: absolute;
-        top: 0;
-        padding: 5px 0;
-        background: #FFF;
-        box-shadow: 0 0 5px 2px rgba(0, 0, 0, .1);
-      }
-
-      .item-link {
-        display: inline-block;
-        vertical-align: middle;
-        width: 100%;
-      }
-
-      .item-icon {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        line-height: 1;
-      }
-
-      .item-label {
-        flex: 1 1 auto;
-        margin: 0 10px;
-        line-height: 1;
-        min-width: 60px;
-        white-space: nowrap;
-      }
-
-      .item-shortcut {
-        line-height: 1;
-      }
-
-      .item-more {
-        display: inline-block;
-        float: right;
-        width: 16px;
-        line-height: 1;
-      }
-    }
-
-    .divider {
-      width: calc(~"100% - 10px");
-    }
-  }
-}
-</style>
-
 <template>
   <div class="context-menu" v-show="isShow" :style="contextMenuStyle" @click.stop.prevent>
     <ToolBox mode="vertical">
@@ -199,11 +123,10 @@ export default {
   },
   methods: {
     handleContextMenuList() {
-      const _t = this
       const contextMenuList = []
       this.toolList.forEach(item => {
         if (item.enableTool && item.enable && item.contextmenu && item.contextmenu.enable) {
-          if (!item.contextmenu.hasOwnProperty('target') || (item.contextmenu.hasOwnProperty('target') && (item.contextmenu.target.length && this.options && this.options.type && item.contextmenu.target.includes(this.options.type)))) {
+          if (!Object.prototype.contextmenu.hasOwnProperty.call(item, 'target') || (Object.prototype.contextmenu.hasOwnProperty.call(item, 'target') && (item.contextmenu.target.length && this.options && this.options.type && item.contextmenu.target.includes(this.options.type)))) {
             contextMenuList.push(item)
           }
         }
@@ -211,7 +134,6 @@ export default {
       this.contextMenuList = contextMenuList
     },
     handleContextMenuStyle() {
-      const _t = this
       const style = {}
       if (!this.options) {
         return style
@@ -226,21 +148,20 @@ export default {
           const elHeight = this.$el.clientHeight
           const elWidth = this.$el.clientWidth
           if (x + elWidth > winWidth) {
-            style['right'] = '10px'
+            style.right = '10px'
           } else {
-            style['left'] = x + 'px'
+            style.left = x + 'px'
           }
           if (y + elHeight > winHeight) {
-            style['bottom'] = '42px'
+            style.bottom = '42px'
           } else {
-            style['top'] = y + 'px'
+            style.top = y + 'px'
           }
         }
         this.contextMenuStyle = style
       })
     },
     doShow(data) {
-      const _t = this
       this.options = data
       this.handleContextMenuList()
       // 处理样式
@@ -248,13 +169,11 @@ export default {
       this.isShow = true
     },
     doHide() {
-      const _t = this
       this.options = null
       this.contextMenuList = []
       this.isShow = false
     },
     handleChildClick(item, child, childIndex) {
-      const _t = this
       if (child.disabled) {
         return
       }
@@ -279,7 +198,6 @@ export default {
       }
       switch (item.name) {
         case 'backgroundColor':
-          // case 'lineColor':
           this.formData[item.name] = val
           payload = {
             ...payload,
@@ -298,15 +216,88 @@ export default {
       }
     },
     handleEditorClick() {
-      const _t = this
       this.$X.utils.eventbus.$emit('editor/contextmenu/close')
-    },
+    }
   },
   created() {
-    const _t = this
     console.log(this.toolList, '消灭小日本')
     this.$X.utils.eventbus.$on('editor/contextmenu/open', this.doShow)
     this.$X.utils.eventbus.$on('editor/contextmenu/close', this.doHide)
   }
 }
 </script>
+<style scoped lang="less" rel="stylesheet/less">
+.context-menu {
+  position: absolute;
+  min-width: 120px;
+  width: auto !important;
+  z-index: 9999;
+  background: #FFF;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .1);
+  padding: 5px 0;
+
+  .tool-box {
+    padding: 0;
+
+    .tool-item {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        color: #000000;
+        background: rgba(0, 0, 0, .1);
+
+        .tool-box {
+          visibility: visible;
+        }
+      }
+
+      .tool-box {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        padding: 5px 0;
+        background: #FFF;
+        box-shadow: 0 0 5px 2px rgba(0, 0, 0, .1);
+      }
+
+      .item-link {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+      }
+
+      .item-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        line-height: 1;
+      }
+
+      .item-label {
+        flex: 1 1 auto;
+        margin: 0 10px;
+        line-height: 1;
+        min-width: 60px;
+        white-space: nowrap;
+      }
+
+      .item-shortcut {
+        line-height: 1;
+      }
+
+      .item-more {
+        display: inline-block;
+        float: right;
+        width: 16px;
+        line-height: 1;
+      }
+    }
+
+    .divider {
+      width: calc(~"100% - 10px");
+    }
+  }
+}
+</style>

@@ -2,58 +2,6 @@
 * ColorPicker
 */
 
-<style scoped lang="less" rel="stylesheet/less">
-.color-picker-box {
-  position: relative;
-
-  .preview {
-    display: inline-block;
-
-    &:hover {
-      color: #57a3f3;
-    }
-
-    .color-preview {
-      display: inline-block;
-      vertical-align: middle;
-      width: 20px;
-      height: 20px;
-      background: transparent;
-      border: 1px solid #cccccc;
-      margin-right: 3px;
-    }
-
-    .color-icon {
-      vertical-align: middle;
-    }
-  }
-
-  .panel {
-    position: absolute;
-    z-index: 10;
-    background: #ffffff;
-    box-shadow: 0 0 2px 2px rgba(0, 0, 0, .1);
-
-    .sketch-picker {
-      border: none;
-      box-shadow: none;
-    }
-
-    .btn-block {
-      text-align: right;
-      padding: 10px;
-      border-top: 1px solid #eee;
-
-      .btn {
-        &+.btn {
-          margin-left: 10px;
-        }
-      }
-    }
-  }
-}
-</style>
-
 <template>
   <div class="color-picker-box" v-click-outside="doHide">
     <div class="preview" @click="togglePanel" v-if="preview">
@@ -129,35 +77,80 @@ export default {
   },
   watch: {
     value(val) {
-      const _t = this
-      _t.color = val
+      this.color = val
     }
   },
   methods: {
     doShow() {
-      const _t = this
-      _t.showPanel = true
+      this.showPanel = true
     },
     doHide() {
-      const _t = this
-      _t.showPanel = false
-      _t.$emit('on-close')
+      this.showPanel = false
+      this.$emit('on-close')
     },
     togglePanel() {
-      const _t = this
-      _t.showPanel = !_t.showPanel
+      this.showPanel = !this.showPanel
     },
     handleChange(val) {
-      const _t = this
       this.color = typeof val === 'object' && Object.prototype.hasOwnProperty.call(val, 'hex8') ? val.hex8 : ''
-      _t.$emit('input', _t.color)
+      this.$emit('input', this.color)
     },
     doConfirm() {
-      const _t = this
-      _t.$emit('on-change', _t.color)
-      _t.color = ''
-      _t.doHide()
+      this.$emit('on-change', this.color)
+      this.color = ''
+      this.doHide()
     }
   }
 }
 </script>
+<style scoped lang="less" rel="stylesheet/less">
+.color-picker-box {
+  position: relative;
+
+  .preview {
+    display: inline-block;
+
+    &:hover {
+      color: #57a3f3;
+    }
+
+    .color-preview {
+      display: inline-block;
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      background: transparent;
+      border: 1px solid #cccccc;
+      margin-right: 3px;
+    }
+
+    .color-icon {
+      vertical-align: middle;
+    }
+  }
+
+  .panel {
+    position: absolute;
+    z-index: 10;
+    background: #ffffff;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, .1);
+
+    .sketch-picker {
+      border: none;
+      box-shadow: none;
+    }
+
+    .btn-block {
+      text-align: right;
+      padding: 10px;
+      border-top: 1px solid #eee;
+
+      .btn {
+        &+.btn {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+</style>

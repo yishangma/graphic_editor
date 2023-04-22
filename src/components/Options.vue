@@ -186,8 +186,8 @@ export default {
   computed: {
     lineDashList() {
       const _t = this
-      const edgeConfig = _t.editorConfig ? _t.editorConfig.edge : null
-      const lineDash = _t.toolList.find(item => item.enableTool && item.name === 'lineDash')
+      const edgeConfig = this.editorConfig ? this.editorConfig.edge : null
+      const lineDash = this.toolList.find(item => item.enableTool && item.name === 'lineDash')
       const list = []
       if (edgeConfig && lineDash && lineDash.enable && lineDash.children) {
         lineDash.children.forEach(item => {
@@ -222,15 +222,15 @@ export default {
         const _t = this
         // 取第一个节点
         console.log(val, 'valvalvalvalvalval')
-        _t.firstItem = val[0]
+        this.firstItem = val[0]
         console.log(this.firstItem, '2023412')
 
-        if (_t.firstItem) {
+        if (this.firstItem) {
           // 解构属性
-          const model = JSON.parse(JSON.stringify(_t.firstItem.model))
+          const model = JSON.parse(JSON.stringify(this.firstItem.model))
           const { labelCfg } = model
           const formData = {}
-          if (_t.isNode) {
+          if (this.isNode) {
             const { x, y, width, height, style, label } = model
             // 元素属性
             formData.attrs = {
@@ -245,10 +245,10 @@ export default {
               stroke: style.stroke,
               lineWidth: style.lineWidth,
               lineDash: style.lineDash,
-              shadowColor: style.shadowColor || _t.defaultValue.shadowColor,
-              shadowBlur: style.shadowBlur || _t.defaultValue.shadowBlur,
-              shadowOffsetX: style.shadowOffsetX || _t.defaultValue.shadowOffsetX,
-              shadowOffsetY: style.shadowOffsetY || _t.defaultValue.shadowOffsetY,
+              shadowColor: style.shadowColor || this.defaultValue.shadowColor,
+              shadowBlur: style.shadowBlur || this.defaultValue.shadowBlur,
+              shadowOffsetX: style.shadowOffsetX || this.defaultValue.shadowOffsetX,
+              shadowOffsetY: style.shadowOffsetY || this.defaultValue.shadowOffsetY,
               fillOpacity: style.fillOpacity
             }
             // 元素文本
@@ -257,7 +257,7 @@ export default {
               position: labelCfg.position,
               offset: labelCfg.offset
             }
-          } else if (_t.isEdge) {
+          } else if (this.isEdge) {
             const {
               // type,
               style,
@@ -272,10 +272,10 @@ export default {
               stroke: style.stroke,
               lineWidth: style.lineWidth,
               lineDash: style.lineDash,
-              shadowColor: style.shadowColor || _t.defaultValue.shadowColor,
-              shadowBlur: style.shadowBlur || _t.defaultValue.shadowBlur,
-              shadowOffsetX: style.shadowOffsetX || _t.defaultValue.shadowOffsetX,
-              shadowOffsetY: style.shadowOffsetY || _t.defaultValue.shadowOffsetY,
+              shadowColor: style.shadowColor || this.defaultValue.shadowColor,
+              shadowBlur: style.shadowBlur || this.defaultValue.shadowBlur,
+              shadowOffsetX: style.shadowOffsetX || this.defaultValue.shadowOffsetX,
+              shadowOffsetY: style.shadowOffsetY || this.defaultValue.shadowOffsetY,
               strokeOpacity: style.strokeOpacity,
               lineAppendWidth: style.lineAppendWidth,
               endArrow: style.endArrow,
@@ -292,7 +292,7 @@ export default {
           }
           // 元素文本样式，节点与边通用
           formData.labelStyle = {
-            fill: labelCfg.style.fill || _t.defaultValue.fill,
+            fill: labelCfg.style.fill || this.defaultValue.fill,
             // stroke: labelCfg.style.stroke,
             lineWidth: labelCfg.style.lineWidth,
             // shadowColor: labelCfg.style.shadowColor,
@@ -301,35 +301,35 @@ export default {
             // shadowOffsetY: labelCfg.style.shadowOffsetY,
             opacity: labelCfg.style.opacity,
             font: labelCfg.style.font,
-            textAlign: labelCfg.style.textAlign || _t.defaultValue.textAlign,
-            textBaseline: labelCfg.style.textBaseline || _t.defaultValue.textBaseline,
+            textAlign: labelCfg.style.textAlign || this.defaultValue.textAlign,
+            textBaseline: labelCfg.style.textBaseline || this.defaultValue.textBaseline,
             fontStyle: labelCfg.style.fontStyle,
             fontVariant: labelCfg.style.fontVariant,
-            fontWeight: labelCfg.style.fontWeight || _t.defaultValue.fontWeight,
-            fontSize: labelCfg.style.fontSize || _t.defaultValue.fontSize,
+            fontWeight: labelCfg.style.fontWeight || this.defaultValue.fontWeight,
+            fontSize: labelCfg.style.fontSize || this.defaultValue.fontSize,
             fontFamily: labelCfg.style.fontFamily,
             lineHeight: labelCfg.style.lineHeight
           }
           // 处理线条样式
-          const target = _t.lineDashList.find(item => {
-            if (item.hasOwnProperty('lineDash') && formData.hasOwnProperty('lineDash')) {
+          const target = this.lineDashList.find(item => {
+            if (Object.prototype.hasOwnProperty.call(item, 'lineDash') && Object.prototype.hasOwnProperty.call(formData, 'lineDash')) {
               return JSON.stringify(item.lineDash) === JSON.stringify(formData.style.lineDash)
             }
             return false
           })
-          _t.lineDashName = target ? target.name : ''
+          this.lineDashName = target ? target.name : ''
           // 处理填充色
           if (/^l\(\d{1,3}\)/gi.test(formData.style.fill)) {
             const gradientDirection = formData.style.fill.match(/^l\((\d{1,3})\)/gi)[0].match(/\d{1,3}/gi)[0]
             const [fillColor, gradientColor] = formData.style.fill.match(/[0,1]{1}:#([\da-f]{3}){1,2}/gi)
             // console.log('fileColor', gradientDirection, typeof gradientDirection, fillColor, gradientColor)
-            _t.gradientDirection = gradientDirection ? parseInt(gradientDirection) : 0
-            _t.fillColor = fillColor.replace('0:', '')
-            _t.gradientColor = gradientColor.replace('1:', '')
+            this.gradientDirection = gradientDirection ? parseInt(gradientDirection) : 0
+            this.fillColor = fillColor.replace('0:', '')
+            this.gradientColor = gradientColor.replace('1:', '')
           }
-          _t.formData = formData
+          this.formData = formData
         } else {
-          _t.formData = {}
+          this.formData = {}
         }
       },
       deep: true
@@ -341,43 +341,43 @@ export default {
       // console.log('change', val, from)
       // 处理数据
       let model = {
-        style: _t.formData.style,
-        label: _t.formData.label,
+        style: this.formData.style,
+        label: this.formData.label,
         labelCfg: {
-          ..._t.formData.labelCfg,
-          style: _t.formData.labelStyle
+          ...this.formData.labelCfg,
+          style: this.formData.labelStyle
         }
       }
-      if (_t.isNode) {
+      if (this.isNode) {
         model = {
           ...model,
-          ..._t.formData.attrs,
-          size: [_t.formData.attrs.width, _t.formData.attrs.height]
+          ...this.formData.attrs,
+          size: [this.formData.attrs.width, this.formData.attrs.height]
         }
       }
       // 处理lineDash
-      if (_t.lineDashName) {
-        const target = _t.lineDashList.find(item => item.name === _t.lineDashName)
+      if (this.lineDashName) {
+        const target = this.lineDashList.find(item => item.name === this.lineDashName)
         model.style.lineDash = target ? target.lineDash : []
       }
       // 处理渐变色
-      if (typeof _t.gradientDirection === 'number' && _t.gradientColor && _t.fillColor) {
-        model.style.fill = `l(${_t.gradientDirection}) 0:${_t.fillColor} 1:${_t.gradientColor}`
+      if (typeof this.gradientDirection === 'number' && this.gradientColor && this.fillColor) {
+        model.style.fill = `l(${this.gradientDirection}) 0:${this.fillColor} 1:${this.gradientColor}`
       } else {
-        model.style.fill = _t.fillColor
+        model.style.fill = this.fillColor
       }
       // console.log('model', JSON.stringify(model))
       // 当前节点数组
-      const currentItemArr = _t.currentItem
+      const currentItemArr = this.currentItem
       // 更新第一个节点
-      if (_t.firstItem) {
+      if (this.firstItem) {
         currentItemArr[0] = {
-          ..._t.firstItem,
+          ...this.firstItem,
           model
         }
       }
       // 广播事件
-      _t.$X.utils.eventbus.$emit('editor/currentItem/update', currentItemArr)
+      this.$X.utils.eventbus.$emit('editor/currentItem/update', currentItemArr)
     }
   }
 }
@@ -389,8 +389,6 @@ export default {
   width: 100%;
   height: 100%;
   font-size: 13px;
-
-
 
   .form-item-block {
     padding: 10px 20px;

@@ -94,18 +94,17 @@ export default {
   },
   data() {
     return {
-      formData: this.editorData ? { ...this.editorData } : {},
+      formData: this.editorData ? { ...this.editorData } : {}
     }
   },
   computed: {
     toolMap() {
-      const _t = this
       const toolMap = {}
       console.log(this.toolList, '干掉小日本')
       this.toolList.forEach(item => {
         if (item.enableTool && item.enable && item.toolbar && item.toolbar.enable) {
           const position = item.toolbar.position
-          if (!toolMap.hasOwnProperty(position)) {
+          if (!Object.prototype.hasOwnProperty.call(toolMap, position)) {
             toolMap[position] = []
           }
           toolMap[position].push(item)
@@ -143,7 +142,6 @@ export default {
       this.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
     },
     handleToolClick(item, val) {
-      const _t = this
       // if (!item.disabled) {
       //   return
       // }
@@ -163,7 +161,7 @@ export default {
           break
       }
       this.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
-    },
+    }
   }
 }
 </script>

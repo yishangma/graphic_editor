@@ -26,7 +26,7 @@ export default {
           width: 40,
           height: 40,
           anchorPoints: [[0, 0], [0, 1], [1, 0], [1, 1]],
-          svg: ``
+          svg: ''
         }
       }
     },
@@ -43,23 +43,19 @@ export default {
     elementStyle () {
       const _t = this
         const style = {}
-        if (_t.width) {
-          style.width = _t.width + 'px'
+        if (this.width) {
+          style.width = this.width + 'px'
         }
-        if (_t.height) {
-          style.height = _t.height + 'px'
+        if (this.height) {
+          style.height = this.height + 'px'
         }
         return style
       }
     },
   methods: {
     handleMouseDown () {
-      const _t = this
-      _t.$X.utils.eventbus.$emit('editor/add/node', _t.info)
+      this.$X.utils.eventbus.$emit('editor/add/node', this.info)
       console.log(this.info, 'this.info')
-      // console.log(obj)
-      // console.log(Object.values(obj))
-      // obj.
     }
   }
 }

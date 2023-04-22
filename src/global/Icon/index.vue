@@ -2,21 +2,6 @@
 * Icon
 */
 
-<style scoped lang="less" rel="stylesheet/less">
-.icon {
-  display: inline-block;
-
-  .iconfont {}
-
-  .img {
-    width: 100%;
-    height: auto;
-  }
-
-  .label {}
-}
-</style>
-
 <template>
   <div class="icon" :title="title">
     <div v-if="iconfont" class="iconfont"></div>
@@ -36,3 +21,17 @@ export default {
   }
 }
 </script>
+<style scoped lang="less" rel="stylesheet/less">
+.icon {
+  display: inline-block;
+
+  .iconfont {}
+
+  .img {
+    width: 100%;
+    height: auto;
+  }
+
+  .label {}
+}
+</style>

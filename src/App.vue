@@ -48,9 +48,8 @@ export default {
   },
   methods: {
     initInfo(data = {}) {
-      const _t = this
-      _t.editorInfo = {
-        ..._t.defInfo,
+      this.editorInfo = {
+        ...this.defInfo,
         ...data
       }
     },
@@ -84,24 +83,24 @@ export default {
     // 这是第三次创建画布 最终的样式效果
     createGraph() {
       const _t = this
-      const { toolList, shortcutMap } = _t.$X.config.tools
+      const { toolList, shortcutMap } = this.$X.config.tools
       this.toolList = toolList
       console.log(toolList, 'toolList')
-      console.log('存储', _t.$X.config.storage.prefix)
+      console.log('存储', this.$X.config.storage.prefix)
 
-      const materials = _t.$X.config.materials
-      _t.shortcutMap = shortcutMap
-      _t.materialList = materials
-      _t.$X.utils.storage.set('toolList', toolList, _t.$X.config.storage.prefix)
-      _t.$X.utils.storage.set('shortcutMap', shortcutMap, _t.$X.config.storage.prefix)
-      _t.$X.utils.storage.set('materials', materials, _t.$X.config.storage.prefix)
+      const materials = this.$X.config.materials
+      this.shortcutMap = shortcutMap
+      this.materialList = materials
+      this.$X.utils.storage.set('toolList', toolList, this.$X.config.storage.prefix)
+      this.$X.utils.storage.set('shortcutMap', shortcutMap, this.$X.config.storage.prefix)
+      this.$X.utils.storage.set('materials', materials, this.$X.config.storage.prefix)
       console.log(materials[0].children, 'materials')
-      // _t.materialsList = materials
-      _t.$X.utils.storage.set('log', {
+      // this.materialsList = materials
+      this.$X.utils.storage.set('log', {
         current: null,
         list: []
-      }, _t.$X.config.storage.prefix)
-      const el = _t.$el
+      }, this.$X.config.storage.prefix)
+      const el = this.$el
       // 画板
       const sketchpad = el.querySelector('#sketchpad')
       // this.registerNode()
@@ -169,7 +168,7 @@ export default {
         },
         plugins: [grid]
       })
-      _t.graph.$D = {
+      this.graph.$D = {
         fill: '#FFFFFF',
         fillOpacity: 1,
         lineColor: '#000000',
@@ -182,16 +181,16 @@ export default {
         lineAppendWidth: 10,
         autoRotate: true
       }
-      _t.graph.setMode('edit')
+      this.graph.setMode('edit')
       // 在写一下函数之后才能够放大或者缩小图形 即点击事件有响应
-      _t.graph.on('canvas:mousedown', _t.canvasMousedown)
+      this.graph.on('canvas:mousedown', this.canvasMousedown)
       // 绑定事件
-      _t.graph.on('node:mousedown', _t.nodeMousedown)
-      _t.graph.on('node:mouseover', _t.nodeHover)
-      _t.graph.on('node:mouseout', _t.nodeOut)
-      _t.graph.on('edge:mousedown', _t.edgeMousedown)
-      _t.graph.on('editor:getItem', function (data) {
-        _t.currentItem = data
+      this.graph.on('node:mousedown', this.nodeMousedown)
+      this.graph.on('node:mouseover', this.nodeHover)
+      this.graph.on('node:mouseout', this.nodeOut)
+      this.graph.on('edge:mousedown', this.edgeMousedown)
+      this.graph.on('editor:getItem', function (data) {
+        this.currentItem = data
       })
       this.graph.on('editor:setItem', function (data) {
         console.log(data, '小日本')
@@ -200,30 +199,30 @@ export default {
           // if (item.type === 'edge') {
           //   TODO 处理箭头
           // }
-          const shapeItem = _t.graph.findById(item.id)
+          const shapeItem = this.graph.findById(item.id)
           if (!index) {
             // 更新第一个节点
-            _t.graph.updateItem(shapeItem, model)
+            this.graph.updateItem(shapeItem, model)
           } else {
             // FIXME 更新同组节点，只更新样式部分
-            _t.editor.updateItem(shapeItem, {
+            this.editor.updateItem(shapeItem, {
               style: data[0].model.style
             })
           }
         })
-        _t.graph.paint()
+        this.graph.paint()
       })
-      _t.graph.on('editor:contextmenu', function (data) {
-        _t.$X.utils.eventbus.$emit('editor/contextmenu/open', data)
+      this.graph.on('editor:contextmenu', function (data) {
+        this.$X.utils.eventbus.$emit('editor/contextmenu/open', data)
       })
       this.graph.on('editor:record', function (from) {
         // 更新操作日志
         console.log('editor:record from', from)
-        _t.updateLog({
+        this.updateLog({
           action: 'record',
           data: {
             time: new Date(),
-            content: _t.graph.save()
+            content: this.graph.save()
           }
         })
       })
@@ -231,49 +230,49 @@ export default {
     },
     canvasMousedown() {
       const _t = this
-      _t.doClearAllStates()
+      this.doClearAllStates()
       // 更新currentItem
-      _t.currentItem = []
+      this.currentItem = []
     },
     nodeMousedown(event) {
       const _t = this
-      _t.doClearAllStates()
-      _t.graph.setItemState(event.item, 'active', true)
+      this.doClearAllStates()
+      this.graph.setItemState(event.item, 'active', true)
     },
     nodeHover(event) {
       const _t = this
       // FIXME 当节点未激活时才可设置hover true状态
       if (!event.item.hasState('active')) {
-        _t.graph.setItemState(event.item, 'hover', true)
+        this.graph.setItemState(event.item, 'hover', true)
       }
     },
     nodeOut(event) {
       const _t = this
-      _t.graph.setItemState(event.item, 'hover', false)
+      this.graph.setItemState(event.item, 'hover', false)
     },
     edgeMousedown(event) {
       const _t = this
-      _t.doClearAllStates()
+      this.doClearAllStates()
       // console.log('_edgeMousedown', event)
       if (event.item && !event.item.destroyed) {
-        _t.graph.setItemState(event.item, 'active', !event.item.hasState('active'))
+        this.graph.setItemState(event.item, 'active', !event.item.hasState('active'))
       }
     },
     doClearAllStates() {
       const _t = this
-      if (!_t.graph) {
+      if (!this.graph) {
         return
       }
       // 批量操作时关闭自动重绘，以提升性能
-      _t.graph.setAutoPaint(false)
-      _t.graph.getNodes().forEach(function (node) {
-        _t.graph.clearItemStates(node, ['active', 'hover', 'selected'])
+      this.graph.setAutoPaint(false)
+      this.graph.getNodes().forEach(function (node) {
+        this.graph.clearItemStates(node, ['active', 'hover', 'selected'])
       })
-      _t.graph.getEdges().forEach(function (edge) {
-        _t.graph.clearItemStates(edge, ['active', 'hover', 'selected'])
+      this.graph.getEdges().forEach(function (edge) {
+        this.graph.clearItemStates(edge, ['active', 'hover', 'selected'])
       })
-      _t.graph.paint()
-      _t.graph.setAutoPaint(true)
+      this.graph.paint()
+      this.graph.setAutoPaint(true)
     },
     // 3月8日添加
     doZoom(info, position) {
@@ -284,26 +283,26 @@ export default {
       if (position) {
         center = position
       } else {
-        const width = _t.graph.get('width')
-        const height = _t.graph.get('height')
+        const width = this.graph.get('width')
+        const height = this.graph.get('height')
         center = {
           x: width / 2,
           y: height / 2
         }
       }
       // if (info.name === 'zoom') {
-      //   _t.graph.zoomTo(info.data, center)
+      //   this.graph.zoomTo(info.data, center)
       // } else
       if (['Fangda', 'Suoxiao'].includes(info.name)) {
-        const currentRatio = _t.graph.getZoom()
+        const currentRatio = this.graph.getZoom()
         const step = 0.1
         ratio = info.name === 'Suoxiao' ? currentRatio - step : currentRatio + step
         ratio = ratio.toFixed(1)
         // 缩放视窗窗口到一个固定比例
-        _t.graph.zoomTo(ratio, center)
+        this.graph.zoomTo(ratio, center)
         // 处理选中，更新toolList
         const toolList = []
-        const toolListData = _t.$X.utils.storage.get('toolList', _t.$X.config.storage.prefix)
+        const toolListData = this.$X.utils.storage.get('toolList', this.$X.config.storage.prefix)
         if (Array.isArray(toolListData)) {
           toolListData.forEach(target => {
             if (target.enableTool) {
@@ -319,12 +318,12 @@ export default {
               toolList.push(target)
             }
           })
-          _t.toolList = toolList
-          _t.$X.utils.storage.set('toolList', toolList, _t.$X.config.storage.prefix)
+          this.toolList = toolList
+          this.$X.utils.storage.set('toolList', toolList, this.$X.config.storage.prefix)
         }
       } else if (info.name === 'actualSize') {
         ratio = 1
-        _t.graph.zoomTo(ratio, center)
+        this.graph.zoomTo(ratio, center)
       }
     },
     handleToolTrigger(info) {
@@ -336,43 +335,43 @@ export default {
         // 清空日志
         case 'clear': {
           // 更新操作日志
-          _t.updateLog({
+          this.updateLog({
             action: info.name
           })
           if (['chexiao'].includes(info.name)) {
-            const log = _t.$X.utils.storage.get('log', _t.$X.config.storage.prefix)
+            const log = this.$X.utils.storage.get('log', this.$X.config.storage.prefix)
             console.log(log, 'kog')
-            _t.$nextTick(function () {
+            this.$nextTick(function () {
               if (log.list.length) {
                 if (log.current === 0) {
                   const data = log.list[0]
                   if (data === null) {
                     // 清除
-                    _t.graph.clear()
-                    _t.graph.paint()
+                    this.graph.clear()
+                    this.graph.paint()
                   } else {
                     // 渲染
-                    _t.graph.read(data.content)
-                    _t.graph.paint()
+                    this.graph.read(data.content)
+                    this.graph.paint()
                     // 缩放到实际大小
-                    _t.doZoom({
+                    this.doZoom({
                       name: 'actualSize'
                     })
                   }
                 } else {
                   const data = log.list[log.current]
                   // 渲染
-                  _t.graph.read(data.content)
-                  _t.graph.paint()
+                  this.graph.read(data.content)
+                  this.graph.paint()
                   // 缩放到实际大小
-                  _t.doZoom({
+                  this.doZoom({
                     name: 'actualSize'
                   })
                 }
               }
             })
             // 更新currentItem
-            _t.currentItem = []
+            this.currentItem = []
           }
           break
         }
@@ -387,20 +386,20 @@ export default {
             }
           })
           nodes.forEach(node => {
-            _t.graph.removeItem(node)
+            this.graph.removeItem(node)
           })
-          _t.graph.getEdges().forEach(edge => {
+          this.graph.getEdges().forEach(edge => {
             if (edge.hasState('active')) {
               isRecord = true
-              _t.graph.removeItem(edge)
+              this.graph.removeItem(edge)
             }
           })
-          _t.currentItem = []
+          this.currentItem = []
           break
         }
         // 历史记录
         case 'history': {
-          const ref = _t.$refs[info.name]
+          const ref = this.$refs[info.name]
           if (ref && ref.show) {
             ref.show()
           }
@@ -413,7 +412,7 @@ export default {
             if (node.hasState('active')) {
               isRecord = true
               const { style } = node.getModel()
-              _t.graph.updateItem(node, {
+              this.graph.updateItem(node, {
                 style: {
                   ...style,
                   fill: info.data
@@ -433,19 +432,19 @@ export default {
         case 'Fangda':
         case 'Suoxiao':
         case 'actualSize': {
-          _t.doZoom(info)
+          this.doZoom(info)
           break
         }
         // 下载
         case 'Download': {
           console.log('Download 了了了')
-          const fileName = _t.$X.utils.filters.formatDate(new Date(), 'YYYYMMDDhhmmss')
+          const fileName = this.$X.utils.filters.formatDate(new Date(), 'YYYYMMDDhhmmss')
           console.log(fileName, 'FileName的')
           console.log(info, 'info.data')
           if (info.data === 'image') {
-            _t.graph.downloadImage(fileName)
+            this.graph.downloadImage(fileName)
           } else if (info.data === 'json') {
-            let content = _t.graph.save()
+            let content = this.graph.save()
             content = JSON.stringify(content)
             const blob = new Blob([content], {
               type: 'application/json;charset=UTF-8'
@@ -482,22 +481,22 @@ export default {
             content: '确认清空画布？',
             onOk: function () {
               // 更新操作日志
-              _t.updateLog({
+              this.updateLog({
                 action: 'clear'
               })
-              _t.graph.clear()
-              _t.graph.paint()
+              this.graph.clear()
+              this.graph.paint()
             }
           })
           // 更新currentItem
-          _t.currentItem = []
+          this.currentItem = []
           break
         }
       }
     },
     bindShortcuts() {
       const _t = this
-      const toolListData = _t.$X.utils.storage.get('toolList', _t.$X.config.storage.prefix)
+      const toolListData = this.$X.utils.storage.get('toolList', this.$X.config.storage.prefix)
       if (Array.isArray(toolListData)) {
         toolListData.forEach(item => {
           if (item.enableTool && item.shortcuts) {
@@ -508,7 +507,7 @@ export default {
                 // internet explorer
                 e.returnValue = false
               }
-              _t.handleToolTrigger({
+              this.handleToolTrigger({
                 name: item.name,
                 data: {}
               })
@@ -519,7 +518,7 @@ export default {
       }
       // 绑定按键事件
       document.addEventListener('keyup', function () {
-        _t.$X.utils.eventbus.$emit('editor/contextmenu/close')
+        this.$X.utils.eventbus.$emit('editor/contextmenu/close')
       })
     },
     doRevert(data) {
@@ -560,7 +559,7 @@ export default {
       // if (!data.hasOwnProperty.call('action') || !data.action) {
       //   return
       // }
-      const oldLog = JSON.parse(JSON.stringify(_t.$X.utils.storage.get('log', _t.$X.config.storage.prefix)))
+      const oldLog = JSON.parse(JSON.stringify(this.$X.utils.storage.get('log', this.$X.config.storage.prefix)))
       console.log(oldLog, 'oldLog')
 
       const log = {
@@ -577,7 +576,7 @@ export default {
               const removeCount = oldLog.list.length - 1 - oldLog.current
               oldLog.list.splice(oldLog.current + 1, removeCount)
             }
-            if (_t.maxLogSize !== null && oldLog.list.length > _t.maxLogSize) {
+            if (this.maxLogSize !== null && oldLog.list.length > this.maxLogSize) {
               oldLog.list.splice(0, 1)
             }
             log.list = [
@@ -610,7 +609,7 @@ export default {
                 const removeCount = oldLog.list.length - 1 - oldLog.current
                 oldLog.list.splice(oldLog.current + 1, removeCount)
               }
-              if (_t.maxLogSize !== null && oldLog.list.length > _t.maxLogSize) {
+              if (this.maxLogSize !== null && oldLog.list.length > this.maxLogSize) {
                 oldLog.list.splice(0, 1)
               }
               log.list = [
@@ -622,7 +621,7 @@ export default {
           }
           break
       }
-      _t.$X.utils.storage.set('log', log, _t.$X.config.storage.prefix)
+      this.$X.utils.storage.set('log', log, this.$X.config.storage.prefix)
     }
   },
   created() {

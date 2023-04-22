@@ -2,17 +2,8 @@
 * CardBox 卡片盒子
 */
 
-
 <template>
   <div class="card-box" :style="boxStyle">
-  <!-- <Handler
-          class="handler"
-          :mode="mode"
-                :position="position"
-                :expand="isExpand"
-                :callback="toggleHandler"
-              >
-              </Handler> -->
     <div class="card-header">
       <slot name="header">
         <div class="title">{{ title }}</div>
@@ -68,23 +59,22 @@ export default {
   },
   computed: {
     boxStyle() {
-      const _t = this
       const style = {}
-      if (_t.placement) {
-        style[_t.placement] = 0
+      if (this.placement) {
+        style[this.placement] = 0
       }
-      if (_t.width) {
-        style.width = _t.width + 'px'
+      if (this.width) {
+        style.width = this.width + 'px'
       }
       // 处理展开
-      if (_t.isExpand) {
-        style[_t.placement] = 0
+      if (this.isExpand) {
+        style[this.placement] = 0
       } else {
-        style[_t.placement] = (-_t.width) + 'px'
+        style[this.placement] = (-this.width) + 'px'
       }
-      _t.$emit('expand', {
-        name: _t.placement,
-        isExpand: _t.isExpand,
+      this.$emit('expand', {
+        name: this.placement,
+        isExpand: this.isExpand,
         style: style
       })
       return style
@@ -92,13 +82,11 @@ export default {
   },
   methods: {
     toggleHandler(val) {
-      const _t = this
-      _t.isExpand = val !== undefined ? val : !_t.isExpand
+      this.isExpand = val !== undefined ? val : !this.isExpand
     }
   },
   created() {
-    const _t = this
-    _t.$X.utils.eventbus.$on('editor/pad/dblclick', _t.toggleHandler)
+    this.$X.utils.eventbus.$on('editor/pad/dblclick', this.toggleHandler)
   }
 }
 </script>
@@ -143,4 +131,3 @@ export default {
   }
 }
 </style>
-

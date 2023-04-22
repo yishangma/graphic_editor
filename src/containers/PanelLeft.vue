@@ -50,7 +50,7 @@ export default {
           return {
             width: 40,
             height: 40,
-            svg: ``
+            svg: ''
           }
         }
       }
@@ -72,9 +72,6 @@ export default {
     },
     clicksecond () {
       this.isFoldsecond = !this.isFoldsecond
-    },
-    onMouseDown (e) {
-      // console.log('mouse', this.normal)
     }
   }
 }

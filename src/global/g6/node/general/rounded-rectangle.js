@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/9/3.
- *
  * 圆角矩形
  */
 
@@ -22,24 +20,24 @@ export default {
       const r = 5
       const path = [
         // 左顶点
-        [ 'M', -width / 2, 0 ],
+        ['M', -width / 2, 0],
         // 左上顶点
-        [ 'L', -width / 2, -height / 2 + r ],
+        ['L', -width / 2, -height / 2 + r],
         // 左上弧
-        [ 'Q', -width / 2, -height / 2, -width / 2 + r, -height / 2 ],
+        ['Q', -width / 2, -height / 2, -width / 2 + r, -height / 2],
         // 右上顶点
-        [ 'L', width / 2 - r, -height / 2 ],
+        ['L', width / 2 - r, -height / 2],
         // 右上弧
-        [ 'Q', width / 2, -height / 2, width / 2, -height / 2 + r ],
+        ['Q', width / 2, -height / 2, width / 2, -height / 2 + r],
         // 右下顶点
-        [ 'L', width / 2, height / 2 - r ],
+        ['L', width / 2, height / 2 - r],
         // 右下弧
-        [ 'Q', width / 2, height / 2, width / 2 - r, height / 2 ],
+        ['Q', width / 2, height / 2, width / 2 - r, height / 2],
         // 左下顶点
-        [ 'L', -width / 2 + r, height / 2 ],
+        ['L', -width / 2 + r, height / 2],
         // 左下弧
-        [ 'Q', -width / 2, height / 2, -width / 2, height / 2 - r ],
-        [ 'Z' ]
+        ['Q', -width / 2, height / 2, -width / 2, height / 2 - r],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

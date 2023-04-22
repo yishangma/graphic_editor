@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/9/3.
- *
  * 圆筒
  */
 
@@ -21,19 +19,19 @@ export default {
       const y = 0 - height / 2
       const path = [
         // 左上
-        [ 'M', -width / 2, -height / 4 ],
+        ['M', -width / 2, -height / 4],
         // 上弧 左->右
-        [ 'C', -width / 2, -height * 5 / 12, width / 2, -height * 5 / 12, width / 2, -height / 4 ],
+        ['C', -width / 2, -height * 5 / 12, width / 2, -height * 5 / 12, width / 2, -height / 4],
         // 右下
-        [ 'L', width / 2, height / 4 ],
+        ['L', width / 2, height / 4],
         // 下弧 右->左
-        [ 'C', width / 2, height * 5 / 12, -width / 2, height * 5 / 12, -width / 2, height / 4 ],
+        ['C', width / 2, height * 5 / 12, -width / 2, height * 5 / 12, -width / 2, height / 4],
         // 左上
-        [ 'L', -width / 2, -height / 4 ],
+        ['L', -width / 2, -height / 4],
         // 上弧 左->右
-        [ 'C', -width / 2, -height * 5 / 12, width / 2, -height * 5 / 12, width / 2, -height / 4 ],
+        ['C', -width / 2, -height * 5 / 12, width / 2, -height * 5 / 12, width / 2, -height / 4],
         // 中弧 右->左
-        [ 'C', width / 2, -height * 1 / 12, -width / 2, -height * 1 / 12, -width / 2, -height / 4 ]
+        ['C', width / 2, -height * 1 / 12, -width / 2, -height * 1 / 12, -width / 2, -height / 4]
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

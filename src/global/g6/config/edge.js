@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/7/16.
- *
  * 边配置
  */
 
@@ -25,10 +23,10 @@ export default {
       lineDash: []
     },
     dashed: {
-      lineDash: [ 5, 5 ]
+      lineDash: [5, 5]
     },
     dot: {
-      lineDash: [ 2, 2 ]
+      lineDash: [2, 2]
     }
   }
 }

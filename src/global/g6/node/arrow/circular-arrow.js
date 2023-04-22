@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/12/27.
- *
  * 圆弧箭头
  */
 
@@ -40,16 +38,16 @@ export default {
       // 左下右
       const P2 = { x: -width / 2 + 2 * L7, y: L1 * 0.25 }
       const path = [
-        [ 'M', P1.x, P1.y ],
+        ['M', P1.x, P1.y],
         // FIXME 圆弧的中心点不在坐标原点上
-        [ 'A', (width - (L2 - L7)) / 2, height / 2 + L1 * 0.25, 0, 1, 1, A0[1].x, A0[1].y ],
-        [ 'L', A0[2].x, A0[2].y ],
-        [ 'L', A0[3].x, A0[3].y ],
-        [ 'L', A0[4].x, A0[4].y ],
-        [ 'L', A0[5].x, A0[5].y ],
+        ['A', (width - (L2 - L7)) / 2, height / 2 + L1 * 0.25, 0, 1, 1, A0[1].x, A0[1].y],
+        ['L', A0[2].x, A0[2].y],
+        ['L', A0[3].x, A0[3].y],
+        ['L', A0[4].x, A0[4].y],
+        ['L', A0[5].x, A0[5].y],
         // FIXME 圆弧的中心点不在坐标原点上
-        [ 'A', (width - (L2 - L7)) / 2 - 2 * L7, height / 2 + L1 * 0.25 - 2 * L7, 0, 1, 0, P2.x, P2.y ],
-        [ 'Z' ]
+        ['A', (width - (L2 - L7)) / 2 - 2 * L7, height / 2 + L1 * 0.25 - 2 * L7, 0, 1, 0, P2.x, P2.y],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

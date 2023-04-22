@@ -332,8 +332,7 @@ export default {
       const _t = this
       let isRecord = false
       switch (info.name) {
-        // 撤销
-        case 'chexiao':
+        // case 'chexiao':
         // 清空日志
         case 'clear': {
           // 更新操作日志
@@ -424,8 +423,8 @@ export default {
           })
           break
         }
-        case 'fullscreen':{
-            if(screenfull.enabled){
+        case 'fullscreen': {
+            if (screenfull.enabled) {
                 screenfull.toggle()
           }
           break
@@ -439,7 +438,7 @@ export default {
         }
         // 下载
         case 'Download': {
-          console.log("Download 了了了")
+          console.log('Download 了了了')
           const fileName = _t.$X.utils.filters.formatDate(new Date(), 'YYYYMMDDhhmmss')
           console.log(fileName, 'FileName的')
           console.log(info, 'info.data')
@@ -466,7 +465,7 @@ export default {
           this.graph.$D.lineType = info.data
           this.graph.getEdges().forEach(edge => {
             if (edge.hasState('active')) {
-              isRecord = true;
+              isRecord = true
               this.graph.updateItem(edge, {
                 type: info.data
               })
@@ -492,13 +491,6 @@ export default {
           })
           // 更新currentItem
           _t.currentItem = []
-          break
-        }
-        // 全屏展示
-        case 'fullscreen': {
-          // if (screenfull.enabled) {
-          screenfull.toggle()
-          // }
           break
         }
       }

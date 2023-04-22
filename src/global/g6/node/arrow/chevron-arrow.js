@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/12/27.
- *
  * 人形箭头
  */
 
@@ -42,13 +40,13 @@ export default {
       }
 
       const path = [
-        [ 'M', A0[1].x, A0[1].y ],
-        [ 'L', A0[2].x, A0[2].y ],
-        [ 'L', A0[3].x, A0[3].y ],
-        [ 'L', A1[1].x, A1[1].y ],
-        [ 'L', A1[2].x, A1[2].y ],
-        [ 'L', A1[3].x, A1[3].y ],
-        [ 'Z' ]
+        ['M', A0[1].x, A0[1].y],
+        ['L', A0[2].x, A0[2].y],
+        ['L', A0[3].x, A0[3].y],
+        ['L', A1[1].x, A1[1].y],
+        ['L', A1[2].x, A1[2].y],
+        ['L', A1[3].x, A1[3].y],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

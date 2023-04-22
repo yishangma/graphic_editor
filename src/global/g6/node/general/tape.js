@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/9/3.
- *
  * 条带
  */
 
@@ -21,14 +19,14 @@ export default {
       const y = 0 - height / 2
       const path = [
         // 左上
-        [ 'M', -width / 2, -height / 4 ],
+        ['M', -width / 2, -height / 4],
         // 上弧
-        [ 'C', -width / 4, height * 1 / 8, width / 4, -height * 5 / 8, width / 2, -height / 4 ],
+        ['C', -width / 4, height * 1 / 8, width / 4, -height * 5 / 8, width / 2, -height / 4],
         // 右下
-        [ 'L', width / 2, height / 4 ],
+        ['L', width / 2, height / 4],
         // 弧
-        [ 'C', width / 4, -height / 8, -width / 4, height * 5 / 8, -width / 2, height / 4 ],
-        [ 'Z' ]
+        ['C', width / 4, -height / 8, -width / 4, height * 5 / 8, -width / 2, height / 4],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

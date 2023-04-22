@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/9/3.
- *
  * 菱形
  */
 
@@ -51,14 +49,14 @@ export default {
       const path = [
         // FIXME (0,0)点在图形正中心，x坐标向右增，y坐标向下增
         // 左顶点
-        [ 'M', -width / 2, 0 ],
+        ['M', -width / 2, 0],
         // 上顶点
-        [ 'L', 0, -height / 2 ],
+        ['L', 0, -height / 2],
         // 右顶点
-        [ 'L', width / 2, 0 ],
+        ['L', width / 2, 0],
         // 下顶点
-        [ 'L', 0, height / 2 ],
-        [ 'Z' ]
+        ['L', 0, height / 2],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

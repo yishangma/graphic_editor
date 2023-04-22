@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/8/29.
- *
  * 节点基础方法
  */
 import * as G6Util from '@antv/util'

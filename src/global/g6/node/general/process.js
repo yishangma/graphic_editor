@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/9/3.
- *
  * 处理
  */
 
@@ -21,25 +19,25 @@ export default {
       const y = 0 - height / 2
       const path = [
         // 左上
-        [ 'M', -width / 2, -height / 2 ],
+        ['M', -width / 2, -height / 2],
         // 右上
-        [ 'L', width / 2, -height / 2 ],
+        ['L', width / 2, -height / 2],
         // 右下
-        [ 'L', width / 2, height / 2 ],
+        ['L', width / 2, height / 2],
         // 右竖线
-        [ 'L', width * 3 / 8, height / 2 ],
-        [ 'L', width * 3 / 8, -height / 2 ],
-        [ 'L', width / 2, -height / 2 ],
-        [ 'L', width / 2, height / 2 ],
+        ['L', width * 3 / 8, height / 2],
+        ['L', width * 3 / 8, -height / 2],
+        ['L', width / 2, -height / 2],
+        ['L', width / 2, height / 2],
         // 左下
-        [ 'L', -width / 2, height / 2 ],
+        ['L', -width / 2, height / 2],
         // 左上
-        [ 'L', -width / 2, -height / 2 ],
+        ['L', -width / 2, -height / 2],
         // 左竖线
-        [ 'L', -width * 3 / 8, -height / 2 ],
-        [ 'L', -width * 3 / 8, height / 2 ],
-        [ 'L', -width / 2, height / 2 ],
-        [ 'L', -width / 2, -height / 2 ]
+        ['L', -width * 3 / 8, -height / 2],
+        ['L', -width * 3 / 8, height / 2],
+        ['L', -width / 2, height / 2],
+        ['L', -width / 2, -height / 2]
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

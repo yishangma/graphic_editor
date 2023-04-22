@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/7/8.
- *
  * 椭圆
  */
 
@@ -22,11 +20,11 @@ export default {
 
       const path = [
         // 左顶点
-        [ 'M', -width / 2, 0 ],
+        ['M', -width / 2, 0],
         // 上弧
-        [ 'A', width / 2, height / 2, 0, 1, 1, width / 2, 0 ],
+        ['A', width / 2, height / 2, 0, 1, 1, width / 2, 0],
         // 下弧
-        [ 'A', width / 2, height / 2, 0, 1, 1, -width / 2, 0 ]
+        ['A', width / 2, height / 2, 0, 1, 1, -width / 2, 0]
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

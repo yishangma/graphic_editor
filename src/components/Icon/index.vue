@@ -1,4 +1,25 @@
 
+<template>
+  <div :class="['tool-box', mode]" @contextmenu.stop.prevent>
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Index',
+  props: {
+    mode: {
+      type: String,
+      // 水平还是垂直类型，可选值为 horizontal 或 vertical
+      default: 'horizontal'
+    },
+    tools: {
+      type: Array
+    }
+  }
+}
+</script>
 <style scoped lang="less" rel="stylesheet/less">
 .tool-box {
   padding: 5px;
@@ -54,25 +75,3 @@
   }
 }
 </style>
-
-<template>
-  <div :class="['tool-box', mode]" @contextmenu.stop.prevent>
-    <slot></slot>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'Index',
-  props: {
-    mode: {
-      type: String,
-      // 水平还是垂直类型，可选值为 horizontal 或 vertical
-      default: 'horizontal'
-    },
-    tools: {
-      type: Array
-    }
-  }
-}
-</script>

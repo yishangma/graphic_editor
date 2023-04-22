@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/9/5.
- *
  * 步骤
  */
 
@@ -21,18 +19,18 @@ export default {
       const y = 0 - height / 2
       const path = [
         // 左上
-        [ 'M', -width / 2, -height / 2 ],
+        ['M', -width / 2, -height / 2],
         // 右上
-        [ 'L', width * 3 / 8, -height / 2 ],
+        ['L', width * 3 / 8, -height / 2],
         // 右顶点
-        [ 'L', width / 2, 0 ],
+        ['L', width / 2, 0],
         // 右下
-        [ 'L', width * 3 / 8, height / 2 ],
+        ['L', width * 3 / 8, height / 2],
         // 左下
-        [ 'L', -width / 2, height / 2 ],
+        ['L', -width / 2, height / 2],
         // 左顶点
-        [ 'L', -width * 3 / 8, 0 ],
-        [ 'Z' ]
+        ['L', -width * 3 / 8, 0],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

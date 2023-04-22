@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/11/9.
- *
  * 下箭头
  */
 
@@ -64,14 +62,14 @@ export default {
       }
 
       const path = [
-        [ 'M', P0.x, P0.y ],
-        [ 'L', P1.x, P1.y ],
-        [ 'L', P2.x, P2.y ],
-        [ 'L', P3.x, P3.y ],
-        [ 'L', P4.x, P4.y ],
-        [ 'L', P5.x, P5.y ],
-        [ 'L', P6.x, P6.y ],
-        [ 'Z' ]
+        ['M', P0.x, P0.y],
+        ['L', P1.x, P1.y],
+        ['L', P2.x, P2.y],
+        ['L', P3.x, P3.y],
+        ['L', P4.x, P4.y],
+        ['L', P5.x, P5.y],
+        ['L', P6.x, P6.y],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

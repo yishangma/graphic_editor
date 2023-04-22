@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/9/3.
- *
  * 平行四边形
  */
 
@@ -21,14 +19,14 @@ export default {
       const y = 0 - height / 2
       const path = [
         // 左下
-        [ 'M', -width / 2, height / 2 ],
+        ['M', -width / 2, height / 2],
         // 左上
-        [ 'L', -width / 4, -height / 2 ],
+        ['L', -width / 4, -height / 2],
         // 右上
-        [ 'L', width / 2, -height / 2 ],
+        ['L', width / 2, -height / 2],
         // 右下
-        [ 'L', width / 4, height / 2 ],
-        [ 'Z' ]
+        ['L', width / 4, height / 2],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

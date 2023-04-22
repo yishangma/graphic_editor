@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/12/26.
- *
  * 信号箭头
  */
 
@@ -58,13 +56,13 @@ export default {
         y: -L7
       }
       const path = [
-        [ 'M', P0.x, P0.y ],
-        [ 'L', P1.x, P1.y ],
-        [ 'L', P2.x, P2.y ],
+        ['M', P0.x, P0.y],
+        ['L', P1.x, P1.y],
+        ['L', P2.x, P2.y],
         // [ 'L', P3.x, P3.y ],
-        [ 'L', P4.x, P4.y ],
-        [ 'L', P5.x, P5.y ],
-        [ 'Z' ]
+        ['L', P4.x, P4.y],
+        ['L', P5.x, P5.y],
+        ['Z']
       ]
       const color = cfg.color
       const style = G6Util.mix({}, {

@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/8/14.
- *
  * 折线
  */
 import base from './base'
@@ -35,9 +33,9 @@ export default {
       for (let i = 0; i < points.length; i++) {
         const point = points[i]
         if (i === 0) {
-          path.push([ 'M', point.x, point.y ])
+          path.push(['M', point.x, point.y])
         } else if (i === points.length - 1) {
-          path.push([ 'L', point.x, point.y ])
+          path.push(['L', point.x, point.y])
         } else {
           const prevPoint = points[i - 1]
           const nextPoint = points[i + 1]

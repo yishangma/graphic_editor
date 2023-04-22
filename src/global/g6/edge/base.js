@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/8/7.
- *
  * 线条公共方法
  */
 
@@ -17,8 +15,8 @@ export default {
       attrs: {
         ...cfg,
         path: [
-          [ 'M', startPoint.x, startPoint.y ],
-          [ 'L', endPoint.x, endPoint.y ]
+          ['M', startPoint.x, startPoint.y],
+          ['L', endPoint.x, endPoint.y]
         ]
       }
     })

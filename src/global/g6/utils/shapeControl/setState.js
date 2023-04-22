@@ -1,7 +1,4 @@
-/**
- * Created by OXOYO on 2019/7/8.
- *
- * 设置shapeControl激活
+/** 设置shapeControl激活
  */
 
 import config from '../../config'

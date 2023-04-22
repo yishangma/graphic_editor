@@ -1,7 +1,4 @@
-/**
- * Created by OXOYO on 2019/7/16.
- *
- * 更新锚点
+/**更新锚点
  */
 
 export default function (cfg, group) {

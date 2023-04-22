@@ -1,7 +1,4 @@
-/**
- * Created by OXOYO on 2019/9/2.
- *
- * 边
+/** 边
  */
 
 import drawAnimate from './drawAnimate'

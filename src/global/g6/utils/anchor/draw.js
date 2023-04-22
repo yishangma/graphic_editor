@@ -1,6 +1,4 @@
 /**
- * Created by OXOYO on 2019/7/8.
- *
  * 绘制锚点
  */
 
@@ -53,20 +51,6 @@ export default function (cfg, group) {
           ...config.anchor.style.default
         }
       })
-      // FIXME 【调试用代码】添加锚点文本
-      // group.addShape('text', {
-      //   id: id + '_anchor_text_' + i,
-      //   name: 'anchorText',
-      //   attrs: {
-      //     x: anchorX,
-      //     y: anchorY,
-      //     fontFamily: 'PingFang SC',
-      //     fontSize: 12,
-      //     text: anchorPoints[i].toString(),
-      //     lineDash: [10, 10],
-      //     fill: 'red'
-      //   }
-      // })
       if (anchorShape) {
         anchorShape.on('mouseenter', function () {
           anchorBgShape.attr({

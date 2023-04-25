@@ -1,4 +1,7 @@
-/** 绘制边动画
+/**
+ * Created by OXOYO on 2019/7/11.
+ *
+ * 绘制边动画
  */
 
 import config from '../../config'

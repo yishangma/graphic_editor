@@ -1,4 +1,7 @@
-/** 图形旋转
+/**
+ * Created by OXOYO on 2019/9/9.
+ *
+ * 图形旋转
  */
 
 export default function (cfg, group, radian) {
@@ -11,7 +14,7 @@ export default function (cfg, group, radian) {
     shapeControlEdge.rotate(radian)
   }
   // 处理控制点
-  if (shapeControl && shapeControl.hasOwnProperty('controllers') && shapeControl.controllers.length) {
+  if (shapeControl && Object.prototype.hasOwnProperty.call(shapeControl, 'controllers') && shapeControl.controllers.length) {
     for (let i = 0, len = shapeControl.controllers.length; i < len; i++) {
       const shapeControlPoint = group.findById(id + '_shape_control_point_' + i)
       if (shapeControlPoint) {
@@ -21,7 +24,7 @@ export default function (cfg, group, radian) {
     }
   }
   // 处理旋转
-  if (shapeControl && shapeControl.hasOwnProperty('rotate') && shapeControl.rotate) {
+  if (shapeControl && Object.prototype.hasOwnProperty.call(shapeControl, 'rotate') && shapeControl.rotate) {
     const shapeControlRotate = group.findById(id + '_shape_control_rotate')
     if (shapeControlRotate) {
       shapeControlRotate.resetMatrix()

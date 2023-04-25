@@ -1,4 +1,7 @@
-/** 图形控制
+/**
+ * Created by OXOYO on 2019/9/2.
+ *
+ * 图形控制
  */
 
 import draw from './draw'

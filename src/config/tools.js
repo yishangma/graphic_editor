@@ -81,55 +81,55 @@ export default function (system = {}, disableTools = [], enableTools = [], short
 
   // 工具列表
   let toolList = [{
-    // 工具项名称，保持唯一性，便于区分工具项
-    name: 'logo',
-    // 文本，无lang时可取label值显示
-    label: 'logo',
-    // 多语言code码
-    lang: 'L10000',
-    // 工具项类型，不同的工具类型在ToolBar、ContextMenu里的表现不一样
-    type: 'link',
-    // 工具项图标
-    icon: '',
-    img: system.logo,
-    // 跳转连接
-    link: system.site,
-    // 是否启用该工具项，用户控制是否启用该工具项
-    enableTool: true,
-    // 是否启用，用于动态控制是否在界面上创建该工具项
-    enable: true,
-    // 启用模式，用于控制在什么模式下启用该工具项
-    enableMode: ['edit', 'preview'],
-    // 是否禁用，用于控制界面上已创建的工具项是否处于禁用状态
-    disabled: false,
-    // 禁用模式，用于控制在什么模式下该工具项处于禁用状态，详见Editor/Index.vue 中的doSetMode方法
-    disabledMode: ['edit', 'preview'],
-    // 热键
-    shortcuts: '',
-    // 工具栏
-    toolbar: {
-      // 是否启用
+      // 工具项名称，保持唯一性，便于区分工具项
+      name: 'logo',
+      // 文本，无lang时可取label值显示
+      label: 'logo',
+      // 多语言code码
+      lang: 'L10000',
+      // 工具项类型，不同的工具类型在ToolBar、ContextMenu里的表现不一样
+      type: 'link',
+      // 工具项图标
+      icon: '',
+      img: system.logo,
+      // 跳转连接
+      link: system.site,
+      // 是否启用该工具项，用户控制是否启用该工具项
+      enableTool: true,
+      // 是否启用，用于动态控制是否在界面上创建该工具项
       enable: true,
-      // 位置
-      position: 'left',
-      // 样式
-      style: {
-        opacity: 1
+      // 启用模式，用于控制在什么模式下启用该工具项
+      enableMode: ['edit', 'preview'],
+      // 是否禁用，用于控制界面上已创建的工具项是否处于禁用状态
+      disabled: false,
+      // 禁用模式，用于控制在什么模式下该工具项处于禁用状态，详见Editor/Index.vue 中的doSetMode方法
+      disabledMode: ['edit', 'preview'],
+      // 热键
+      shortcuts: '',
+      // 工具栏
+      toolbar: {
+        // 是否启用
+        enable: true,
+        // 位置
+        position: 'left',
+        // 样式
+        style: {
+          opacity: 1
+        },
+        // 分割线，是否在该工具项后显示分割线，ToolBar中为竖线，ContextMenu中为横线
+        divider: false
       },
-      // 分割线，是否在该工具项后显示分割线，ToolBar中为竖线，ContextMenu中为横线
-      divider: false
+      // 右键菜单
+      contextmenu: {
+        // 是否启用
+        enable: false,
+        // 目标元素类型，用于控制在什么元素上可以显示该工具项
+        target: [],
+        style: {},
+        // 分割线，是否在该工具项后显示分割线，ToolBar中为竖线，ContextMenu中为横线
+        divider: false
+      }
     },
-    // 右键菜单
-    contextmenu: {
-      // 是否启用
-      enable: false,
-      // 目标元素类型，用于控制在什么元素上可以显示该工具项
-      target: [],
-      style: {},
-      // 分割线，是否在该工具项后显示分割线，ToolBar中为竖线，ContextMenu中为横线
-      divider: false
-    }
-  },
     // 撤销-----------------------------------------------------
     {
       name: 'chexiao',
@@ -246,7 +246,7 @@ export default function (system = {}, disableTools = [], enableTools = [], short
         target: ['canvas'],
         style: {},
         divider: true
-      },
+      }
 
     },
     {
@@ -369,17 +369,17 @@ export default function (system = {}, disableTools = [], enableTools = [], short
       lockLabel: true,
       // 子节点
       children: [{
-        name: 'default',
-        label: 'Default',
-        lang: 'L10039',
-        type: 'normal',
-        icon: '',
-        style: {},
-        data: 'default',
-        enable: true,
-        disabled: false,
-        divider: false
-      },
+          name: 'default',
+          label: 'Default',
+          lang: 'L10039',
+          type: 'normal',
+          icon: '',
+          style: {},
+          data: 'default',
+          enable: true,
+          disabled: false,
+          divider: false
+        },
         {
           name: 'image',
           label: 'Image',
@@ -394,7 +394,7 @@ export default function (system = {}, disableTools = [], enableTools = [], short
         }
       ]
     },
-    //直线--------------------------------
+    // 直线--------------------------------
     {
       name: 'lineType',
       label: 'line style',
@@ -425,16 +425,16 @@ export default function (system = {}, disableTools = [], enableTools = [], short
       lockLabel: false,
       // 子节点
       children: [{
-        name: 'solid',
-        label: 'solid',
-        lang: '',
-        type: 'normal',
-        icon: 'icon-zhixian',
-        data: 'solid',
-        enable: true,
-        disabled: false,
-        divider: false
-      },
+          name: 'solid',
+          label: 'solid',
+          lang: '',
+          type: 'normal',
+          icon: 'icon-zhixian',
+          data: 'solid',
+          enable: true,
+          disabled: false,
+          divider: false
+        },
         {
           name: 'dashed',
           label: 'dashed',
@@ -490,17 +490,17 @@ export default function (system = {}, disableTools = [], enableTools = [], short
       lockLabel: true,
       // 子节点
       children: [{
-        name: 'image',
-        label: 'Image',
-        lang: '',
-        type: 'normal',
-        icon: 'icon-tupian',
-        style: {},
-        data: 'image',
-        enable: true,
-        disabled: false,
-        divider: false
-      },
+          name: 'image',
+          label: 'Image',
+          lang: '',
+          type: 'normal',
+          icon: 'icon-tupian',
+          style: {},
+          data: 'image',
+          enable: true,
+          disabled: false,
+          divider: false
+        },
         {
           name: 'json',
           label: 'Json',

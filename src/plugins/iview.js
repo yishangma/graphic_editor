@@ -15,7 +15,7 @@ import {
 } from 'view-design'
 
 import 'view-design/dist/styles/iview.css'
-
+Vue.prototype.$Modal = Modal
 Vue.component('Button', Button)
 Vue.component('Icon', Icon)
 Vue.component('Dropdown', Dropdown)

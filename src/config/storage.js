@@ -1,8 +1,9 @@
 /**
+ * Created by OXOYO on 2020/6/30
+ *
  * 存储配置
  */
 
 export default {
-  // 存储前缀
   prefix: 'originpower'
 }

@@ -4,6 +4,14 @@
 
 <template>
   <div class="card-box" :style="boxStyle">
+  <!-- <Handler
+          class="handler"
+          :mode="mode"
+                  :position="position"
+                  :expand="isExpand"
+                  :callback="toggleHandler"
+                >
+                </Handler> -->
     <div class="card-header">
       <slot name="header">
         <div class="title">{{ title }}</div>
@@ -59,6 +67,7 @@ export default {
   },
   computed: {
     boxStyle() {
+      const _t = this
       const style = {}
       if (this.placement) {
         style[this.placement] = 0
@@ -82,10 +91,12 @@ export default {
   },
   methods: {
     toggleHandler(val) {
+      const _t = this
       this.isExpand = val !== undefined ? val : !this.isExpand
     }
   },
   created() {
+    const _t = this
     this.$X.utils.eventbus.$on('editor/pad/dblclick', this.toggleHandler)
   }
 }

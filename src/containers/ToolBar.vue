@@ -1,11 +1,11 @@
 <template>
   <div class="tool-bar">
     <template v-for="(type, typeIndex) in Object.keys(toolMap)">
-      <ToolBox mode="horizontal" :key="typeIndex">
+      <ToolBox mode="horizontal" :key="typeIndex" :class="type">
         <template v-for="(item, index) in toolMap[type]">
           <!-- 颜色选择器 背景颜色 -->
           <ToolItem v-if="item.type === 'dropdown-color-picker'" :key="'tool_' + type + '_item_' + index"
-                    :active="item.active" :disabled="item.disabled" :style="item.toolbar.style">
+            :active="item.active" :disabled="item.disabled" :style="item.toolbar.style" :title="item.title">
             <template v-slot:label>
               <template v-if="item.disabled">
                 <ColorPicker v-model="formData[item.name]" @on-change="(val) => handleToolClick(item, val, null)">
@@ -19,15 +19,15 @@
           </ToolItem>
           <!-- 包括删除 撤销 历史记录等 -->
           <ToolItem v-if="item.type === 'normal' && item.showing" :key="'tool_' + type + '_item_' + index"
-                    :active="item.active" :disabled="item.disabled" :style="item.toolbar.style"
-                    @click.native="handleToolClick(item)">
+            :title="item.title" :active="item.active" :disabled="item.disabled" :style="item.toolbar.style"
+            @click.native="handleToolClick(item)">
             <template v-slot:label>
-              <XIcon :iconfont="item.icon"></XIcon>
+              <XIcon :iconfont="item.icon" :label="item.title"></XIcon>
             </template>
           </ToolItem>
           <!-- 包括下载 线条类型 -->
           <ToolItem v-if="item.type === 'dropdown-list'" :key="'tool_' + type + '_item_' + index" :active="item.active"
-                    :disabled="item.disabled" :style="item.toolbar.style">
+            :disabled="item.disabled" :style="item.toolbar.style" :title="item.title">
             <template v-slot:label>
               <template v-if="item.disable">
                 <template v-if="item.lockLabel">
@@ -42,14 +42,14 @@
                     </template>
                     <template v-else>
                       <XIcon :iconfont="item.children[item.selected].icon" style="vertical-align: middle;"
-                             :style="item.children[item.selected].style">
+                        :style="item.children[item.selected].style">
                       </XIcon>
                     </template>
                     <Icon type="ios-arrow-down"></Icon>
                   </div>
                   <DropdownMenu slot="list" style="text-align: center;">
                     <DropdownItem v-for="(child, childIndex) in item.children" :key="childIndex" :name="childIndex"
-                                  :disabled="child.disabled" :divided="child.divider" :select="item.selected === childIndex">
+                      :disabled="child.disabled" :divided="child.divider" :select="item.selected === childIndex">
                       <template v-if="child.type === 'normal'">
                         <XIcon :iconfont="child.icon" :style="child.style"></XIcon>
                       </template>
@@ -61,7 +61,7 @@
           </ToolItem>
           <!-- logo显示 -->
           <ToolItem v-if="item.type === 'link'" :key="'tool_' + type + '_item_' + index" :active="item.active"
-                    :disabled="item.disabled" :style="item.toolbar.style">
+            :disabled="item.disabled" :style="item.toolbar.style">
             <template v-slot:label>
               <XIcon class="link" :iconfont="item.icon" :img="item.img"></XIcon>
             </template>
@@ -77,7 +77,7 @@ import { DropdownMenu } from 'view-design'
 import ToolBox from '../components/ToolBox/Index.vue'
 import ToolItem from '../components/ToolBox/ToolItem.vue'
 import ColorPicker from '../global/ColorPicker/Index.vue'
-import XIcon from '../global/Icon/Index.vue'
+import XIcon from '../global/Icon/index.vue'
 export default {
   name: 'ToolBar',
   components: {
@@ -99,12 +99,13 @@ export default {
   },
   computed: {
     toolMap() {
+      const _t = this
       const toolMap = {}
       console.log(this.toolList, '干掉小日本')
       this.toolList.forEach(item => {
         if (item.enableTool && item.enable && item.toolbar && item.toolbar.enable) {
           const position = item.toolbar.position
-          if (!Object.prototype.hasOwnProperty.call(toolMap, position)) {
+          if (Object.prototype.hasOwnProperty.call(!toolMap, position)) {
             toolMap[position] = []
           }
           toolMap[position].push(item)
@@ -142,6 +143,7 @@ export default {
       this.$X.utils.eventbus.$emit('editor/tool/trigger', payload)
     },
     handleToolClick(item, val) {
+      const _t = this
       // if (!item.disabled) {
       //   return
       // }

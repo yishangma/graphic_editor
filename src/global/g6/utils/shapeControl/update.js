@@ -1,4 +1,7 @@
-/** 更新图形控制
+/**
+ * Created by OXOYO on 2019/7/16.
+ *
+ * 更新图形控制
  */
 
 export default function (cfg, group) {
@@ -12,16 +15,16 @@ export default function (cfg, group) {
       width,
       height,
       path: [
-        [ 'M', -width / 2, -height / 2 ],
-        [ 'L', width / 2, -height / 2 ],
-        [ 'L', width / 2, height / 2 ],
-        [ 'L', -width / 2, height / 2 ],
-        [ 'Z' ]
+        ['M', -width / 2, -height / 2],
+        ['L', width / 2, -height / 2],
+        ['L', width / 2, height / 2],
+        ['L', -width / 2, height / 2],
+        ['Z']
       ]
     })
   }
   // 处理控制点
-  if (shapeControl && shapeControl.hasOwnProperty('controllers') && shapeControl.controllers.length) {
+  if (shapeControl && Object.prototype.hasOwnProperty.call(shapeControl, 'controllers') && shapeControl.controllers.length) {
     for (let i = 0, len = shapeControl.controllers.length; i < len; i++) {
       const [x, y] = shapeControl.controllers[i]
       // 计算Marker中心点坐标
@@ -39,7 +42,7 @@ export default function (cfg, group) {
     }
   }
   // 处理旋转
-  if (shapeControl && shapeControl.hasOwnProperty('rotate') && shapeControl.rotate) {
+  if (shapeControl && Object.prototype.hasOwnProperty.call(shapeControl, 'rotate') && shapeControl.rotate) {
     const shapeControlRotate = group.findById(id + '_shape_control_rotate')
     if (shapeControlRotate) {
       shapeControlRotate.attr({

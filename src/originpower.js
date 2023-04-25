@@ -7,11 +7,11 @@ import './plugins/iview.js'
 import vClickOutside from 'v-click-outside'
 import utils from './global/utils/index'
 import config from './config/index'
-Vue.use(vClickOutside)
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(vClickOutside)
 Vue.use(ElementUI)
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 
 // import vClickOutside from 'v-click-outside'
 
@@ -23,7 +23,7 @@ export default function (options) {
 
   if (props) {
     // 合并配置
-    ['storage', 'infoPanel'].forEach(key => {
+    ['storage', 'infoPanel', 'storage'].forEach(key => {
       if (props.hasOwnProperty.call(key) && props[key] && props[key] instanceof Object) {
         config[key] = {
           ...config[key],

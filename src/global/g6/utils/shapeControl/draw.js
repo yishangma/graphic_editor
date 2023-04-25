@@ -1,4 +1,6 @@
 /**
+ * Created by OXOYO on 2019/7/11.
+ *
  * 绘制图形控制
  */
 
@@ -18,18 +20,18 @@ export default function (cfg, group) {
       width,
       height,
       path: [
-        [ 'M', -width / 2, -height / 2 ],
-        [ 'L', width / 2, -height / 2 ],
-        [ 'L', width / 2, height / 2 ],
-        [ 'L', -width / 2, height / 2 ],
-        [ 'Z' ]
+        ['M', -width / 2, -height / 2],
+        ['L', width / 2, -height / 2],
+        ['L', width / 2, height / 2],
+        ['L', -width / 2, height / 2],
+        ['Z']
       ],
       // 默认样式
       ...config.shapeControl.style.default.edge
     }
   })
   // 处理控制点
-  if (shapeControl && shapeControl.hasOwnProperty('controllers') && shapeControl.controllers.length) {
+  if (shapeControl && Object.prototype.hasOwnProperty.call(shapeControl, 'controllers') && shapeControl.controllers.length) {
     for (let i = 0, len = shapeControl.controllers.length; i < len; i++) {
       const [x, y, cursor] = shapeControl.controllers[i]
       // 计算Marker中心点坐标
@@ -60,7 +62,7 @@ export default function (cfg, group) {
     }
   }
   // 处理旋转
-  if (shapeControl && shapeControl.hasOwnProperty('rotate') && shapeControl.rotate) {
+  if (shapeControl && Object.prototype.hasOwnProperty.call(shapeControl, 'rotate') && shapeControl.rotate) {
     const rotateW = 20
     const rotateH = 20
     group.addShape('image', {
